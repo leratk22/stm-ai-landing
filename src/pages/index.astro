@@ -1,0 +1,35 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/sections/Header.astro";
+import Hero from "../components/sections/Hero.astro";
+import Advantages from "../components/sections/Advantages.astro";
+import Audience from "../components/sections/Audience.astro";
+import Comparison from "../components/sections/Comparison.astro";
+import Scope from "../components/sections/Scope.astro";
+import Process from "../components/sections/Process.astro";
+import Cases from "../components/sections/Cases.astro";
+import CtaSection from "../components/sections/CtaSection.astro";
+import Faq from "../components/sections/Faq.astro";
+import Legal from "../components/sections/Legal.astro";
+import ContactModal from "../components/ui/ContactModal.astro";
+---
+
+<Layout
+  title="STM — сайт для вашего бизнеса за 390 000 ₽"
+  description="Студийный дизайн-опыт и AI-разработка. Запуск сайта от 2 недель."
+>
+  <Header />
+  <main>
+    <Hero />
+    <Advantages />
+    <Audience />
+    <Comparison />
+    <Scope />
+    <Process />
+    <Cases />
+    <CtaSection />
+    <Faq />
+  </main>
+  <Legal />
+  <ContactModal />
+</Layout>

@@ -1,0 +1,32 @@
+---
+/**
+ * Сквозные вертикальные хейрлайны из макета.
+ * Крайние стоят на 8px снаружи контентных краёв (в макете 138 и 1590
+ * при контенте 146…1582), внутренние — по центрам разрывов сетки.
+ * Привязаны к контейнеру, чтобы держаться на любой ширине.
+ *
+ * `dividers` — сколько внутренних линий: 1 для сетки в две колонки,
+ * 2 для трёх. Ниже lg сетка перестраивается, и внутренние линии
+ * перестают совпадать с разрывами, поэтому там они скрыты.
+ */
+interface Props {
+  dividers?: number;
+}
+
+const { dividers = 1 } = Astro.props;
+const positions = Array.from({ length: dividers }, (_, i) => ((i + 1) / (dividers + 1)) * 100);
+---
+
+<div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+  <div class="container-content h-full">
+    <div class="relative h-full">
+      <span class="absolute inset-y-0 -left-2 w-px bg-line"></span>
+      {
+        positions.map((left) => (
+          <span class="absolute inset-y-0 hidden w-px bg-line lg:block" style={`left:${left}%`} />
+        ))
+      }
+      <span class="absolute inset-y-0 -right-2 w-px bg-line"></span>
+    </div>
+  </div>
+</div>

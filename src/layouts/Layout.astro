@@ -1,0 +1,51 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="ru_RU" />
+
+    {/* Ставим до отрисовки: CSS прячет .reveal только при наличии .js,
+        так контент не пропадёт, если модули не загрузятся */}
+    <script is:inline>
+      document.documentElement.classList.add("js");
+    </script>
+
+    {/* Кириллица нужна для первого экрана — грузим её приоритетно.
+        Латиница подтянется по мере встречи в тексте. */}
+    <link
+      rel="preload"
+      href="/fonts/inter-var-cyrillic.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+  </head>
+
+  <body>
+    <slot />
+
+    <script>
+      import { initReveal } from "../scripts/reveal";
+      initReveal();
+    </script>
+  </body>
+</html>

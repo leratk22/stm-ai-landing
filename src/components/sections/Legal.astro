@@ -1,0 +1,26 @@
+---
+import { legal } from "../../data/content";
+
+/** Юридическая строка (Figma 165:583), секция 1728×81. Поля 146/28. */
+---
+
+<footer class="bg-surface">
+  <div
+    class="container-content flex flex-col gap-3 py-7 sm:flex-row sm:items-start sm:justify-between"
+  >
+    <p class="type-card-body">{legal.copyright}</p>
+
+    <p class="type-card-body sm:text-right">
+      {
+        legal.links.map((link, i) => (
+          <>
+            {i > 0 && <span class="px-2">·</span>}
+            <a href={link.href} class="transition-colors duration-300 hover:text-white">
+              {link.label}
+            </a>
+          </>
+        ))
+      }
+    </p>
+  </div>
+</footer>

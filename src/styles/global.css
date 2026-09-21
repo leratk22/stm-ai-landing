@@ -1,0 +1,213 @@
+@import "tailwindcss";
+@import "./fonts.css";
+
+/* ─────────────────────────────────────────────────────────────
+   Design tokens
+   Источник: Figma «Студия STM» (node 63:887) + стилевой референс
+   atlasdesign.framer.ai. Точные значения из Figma подставляются
+   после выдачи доступа к Allowed directories в Dev Mode.
+   ───────────────────────────────────────────────────────────── */
+@theme {
+  /* Поверхности */
+  --color-bg: #0c0e12;
+  --color-surface: #111317;
+  --color-surface-2: #16181d;
+  --color-deep: #050505;
+
+  /* Акценты. В макете их два, и роли разные:
+     accent — заливки (кнопки, колонка STM в таблице, выделение);
+     accent-ink — текстовые акценты (слова в заголовках, цены конкурентов).
+     Смешивать нельзя: у знака в логотипе тоже #FF4112. */
+  --color-accent: #ff1e00;
+  --color-accent-hover: #ff3a20;
+  --color-accent-ink: #ff4112;
+
+  /* Текст */
+  --color-fg: #ffffff;
+  --color-fg-muted: rgba(255, 255, 255, 0.56);
+  --color-fg-subtle: rgba(255, 255, 255, 0.36);
+
+  /* Линии — сквозная hairline-сетка из макета */
+  --color-line: rgba(255, 255, 255, 0.08);
+  --color-line-strong: rgba(255, 255, 255, 0.14);
+
+  /* Сетка: макет 1728, контент 1436 при полях 146 */
+  --spacing-gutter: 1.5rem;
+  --container-content: 1436px;
+
+  /* Типографика */
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Тайминги анимаций — под характер референса */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: #fff;
+  }
+}
+
+@layer components {
+  /* Контейнер контента: 1436px как в макете, с гуттерами на узких экранах */
+  .container-content {
+    width: 100%;
+    max-width: calc(var(--container-content) + var(--spacing-gutter) * 2);
+    margin-inline: auto;
+    padding-inline: var(--spacing-gutter);
+  }
+
+  /* Дисплейный заголовок героя — «Сайт для вашего бизнеса за 390 000 ₽» */
+  /* Макет: 128px / 700 / line-height 0.86 / tracking −6.4px (−0.05em) */
+  .type-display {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2.5rem, 7.41vw, 8rem);
+    line-height: 0.86;
+    letter-spacing: -0.05em;
+  }
+
+  /* Заголовок CTA. Макет: 108px / 700 / 0.86 / −4.32px.
+     Здесь кегль текучий, в отличие от заголовков секций: блок под него
+     задан долей контейнера (952 из 1436), и если держать кегль
+     ступенями, текст перестанет попадать в свои две строки. */
+  .type-display-md {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2.25rem, 6.25vw, 6.75rem);
+    line-height: 0.86;
+    letter-spacing: -0.04em;
+  }
+
+  /* Заголовок секции. Макет: 48px / 700 / 1.1 / −0.96px.
+     Ступенями, а не clamp от vw: текучий кегль ужимался вместе с экраном
+     и на 1280 давал 36px вместо 48. С 1024 держим размер макета. */
+  .type-h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.75rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  /* Заголовок карточки. Макет: 24px / 600 / 1.2 / −0.48px */
+  .type-h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .type-body {
+    font-size: clamp(0.9375rem, 1.05vw, 1.125rem);
+    line-height: 1.45;
+    color: var(--color-fg-muted);
+  }
+
+  /* Лид: макет 28px / 1.2 / −0.56px.
+     Вес задаётся на месте — в герое 500, во второй секции 400. */
+  .type-lead {
+    font-size: 1.25rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  /* Текст карточки. Макет: 18px / Light 300 / 1.4 / −0.576px / белый 50% */
+  .type-card-body {
+    font-weight: 300;
+    font-size: 1rem;
+    line-height: 1.4;
+    letter-spacing: -0.032em;
+    color: rgb(255 255 255 / 0.5);
+  }
+
+  /* Ступени кегля. С 1024px держим ровно размеры макета —
+     дальше вверх текст уже не растёт, чтобы не спорить с сеткой. */
+  @media (min-width: 48rem) {
+    .type-h2 { font-size: 2.25rem; }
+    .type-lead { font-size: 1.5rem; }
+  }
+
+  @media (min-width: 64rem) {
+    .type-h2 { font-size: 3rem; }
+    .type-h3 { font-size: 1.5rem; }
+    .type-lead { font-size: 1.75rem; }
+    .type-card-body { font-size: 1.125rem; }
+  }
+
+  /* Мелкие капсы: «КАК МЫ РАБОТАЕМ», «ДИЗАЙН-СИСТЕМЫ» */
+  /* Макет: 12px / 500 / tracking −0.24px, прозрачность 70% */
+  .type-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+}
+
+/* Уважаем системную настройку: гасим весь движ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Движение. Словарь взят с референса atlasdesign.framer.ai:
+   появление = opacity 0→1 + translateY 20–30px со стаггером,
+   бегущая строка = бесконечный translateX,
+   крупные блоки = лёгкий параллакс по скроллу.
+   У нас это чистый CSS + IntersectionObserver вместо Framer Motion.
+   ───────────────────────────────────────────────────────────── */
+@layer utilities {
+  /* Прячем только когда JS доступен: класс .js ставит инлайн-скрипт в <head>.
+     Иначе при упавшем JS весь контент остался бы с opacity: 0 навсегда. */
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 0.75s var(--ease-out-soft),
+      transform 0.75s var(--ease-out-soft);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .js .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Бегущая строка: трек дублируется в разметке, сдвигаем на -50% */
+  .marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee-scroll var(--marquee-duration, 40s) linear infinite;
+  }
+
+  .marquee:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+}

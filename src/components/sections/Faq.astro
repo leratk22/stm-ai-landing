@@ -1,0 +1,39 @@
+---
+import { faq } from "../../data/content";
+
+/**
+ * FAQ (Figma 165:561), секция 1728×376. Поля 146, снизу 72, сверху нет.
+ * Две равные колонки: слева заголовок, справа вопросы.
+ *
+ * В макете нарисовано только свёрнутое состояние — ответов там нет.
+ * Собран нативным <details>: работает без JS, доступен с клавиатуры,
+ * плюс поворачивается в крестик через details[open].
+ * Тексты ответов собраны из копирайта других секций, требуют утверждения.
+ */
+---
+
+<section id="faq" class="bg-surface">
+  <div class="container-content flex flex-col gap-8 pb-20 lg:flex-row lg:items-start lg:gap-0 lg:pb-[4.5rem]">
+    <h2 class="reveal type-h2 lg:flex-1">{faq.title}</h2>
+
+    <div class="flex flex-col lg:flex-1">
+      {
+        faq.items.map((item, i) => (
+          <details class="group border-t border-white/15">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-4 [&::-webkit-details-marker]:hidden">
+              <span class="type-lead">{item.question}</span>
+              <span
+                class="shrink-0 text-[20px] leading-none transition-transform duration-300 group-open:rotate-45"
+                aria-hidden="true"
+              >
+                ＋
+              </span>
+            </summary>
+
+            <p class="type-card-body pb-5">{item.answer}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

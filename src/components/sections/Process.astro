@@ -1,0 +1,44 @@
+---
+import { process } from "../../data/content";
+import GridLines from "../ui/GridLines.astro";
+import InfoCard from "../ui/InfoCard.astro";
+
+/**
+ * «Как проходит работа» (Figma 163:235), секция 1728×1129.
+ * Ритм макета: заголовок 164px, лид через 24, горизонтальный
+ * разделитель 393px, карточки 401…761 и 769…1129, без нижнего поля.
+ *
+ * Первая пилюля — номер шага, вторая — срок. Карточка та же,
+ * что во второй секции, поэтому вынесена в InfoCard.
+ */
+---
+
+<section id="process" class="relative overflow-hidden bg-surface">
+  <GridLines dividers={2} />
+
+  <div class="container-content relative pt-20 lg:pt-[10.25rem]">
+    <h2 class="reveal type-h2 lg:max-w-[62.375rem]">{process.title}</h2>
+    <p class="reveal type-lead mt-6 text-white" style="--reveal-delay: 80ms">
+      {process.subtitle}
+    </p>
+  </div>
+
+  {/* Горизонтальный разделитель во всю ширину — в макете на 393px */}
+  <div class="mt-12 h-px w-full bg-line lg:mt-[7.375rem]"></div>
+
+  <div class="container-content relative pt-2">
+    <div class="grid gap-2 md:grid-cols-2 lg:grid-cols-3">
+      {
+        process.steps.map((step, i) => (
+          <InfoCard
+            class="reveal"
+            style={`--reveal-delay: ${(i % 3) * 100}ms`}
+            tags={[String(i + 1), step.duration]}
+            title={step.title}
+            text={step.text}
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>

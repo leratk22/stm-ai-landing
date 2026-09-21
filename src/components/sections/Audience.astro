@@ -1,0 +1,63 @@
+---
+import { audience } from "../../data/content";
+
+/**
+ * «Кому подойдет» (Figma 163:93), секция 1728×521.
+ *
+ * Колонка заголовка держит абсолютные 410px из макета — так переносы
+ * в заголовке совпадают с оригиналом на любой десктопной ширине.
+ * А вот название пункта задано долей списка (430 из 930 = 46.24%):
+ * когда оно тоже было фиксированным, колонка описания схлопывалась —
+ * на 1280 оставалось 196px вместо 400.
+ *
+ * Строкой раскладываемся с 1152. Порог 1280 был ошибкой — окно 1264
+ * это обычный десктоп, а он получал раскладку в одну колонку.
+ * Опускать до 1024 тоже нельзя: там под заголовок остаётся ~320px
+ * и он рвётся на 7 строк вместо макетных 5.
+ *
+ * Колонка заголовка всегда 410px как в макете — от неё зависят переносы.
+ * Ужимается только разрыв: 48 в диапазоне 1152–1279, 96 с 1280.
+ *
+ * Разделитель первой строки в макете — rgba(17,17,17,0.18), то есть
+ * практически невидим на чёрном, у остальных rgba(255,255,255,0.1).
+ * Похоже на оплошность в макете; оставлено как в оригинале.
+ */
+---
+
+<section id="audience" class="bg-black">
+  <div
+    class="container-content flex flex-col gap-12 py-20 min-[72rem]:flex-row min-[72rem]:items-start min-[72rem]:gap-12 min-[72rem]:py-28 xl:gap-24"
+  >
+    <h2 class="reveal type-h2 shrink-0 min-[72rem]:w-[25.625rem]">
+      {audience.title.lead}<span class="text-accent-ink">{audience.title.accent}</span>
+    </h2>
+
+    <div class="flex min-w-0 flex-1 flex-col">
+      {
+        audience.items.map((item, i) => (
+          <div>
+            {/* Разделитель вне .reveal: иначе линия проявляется вместе
+                со строкой и список выглядит оборванным до анимации */}
+            <div class:list={["h-px w-full", i === 0 ? "bg-[rgba(17,17,17,0.18)]" : "bg-white/10"]} />
+
+            <div
+              class="reveal flex flex-col gap-4 py-6 min-[72rem]:flex-row min-[72rem]:items-center min-[72rem]:gap-8"
+              style={`--reveal-delay: ${i * 90}ms`}
+            >
+              {/* xl:contents убирает обёртку из потока, чтобы доля ширины
+                  у названия считалась от всей строки, а не от пары с пилюлей */}
+              <div class="flex items-center gap-8 min-[72rem]:contents">
+                <span class="type-eyebrow inline-flex h-[23px] w-9 shrink-0 items-center justify-center rounded-full bg-surface text-white/70">
+                  {item.index}
+                </span>
+                <p class="type-lead shrink-0 min-[72rem]:w-[46.24%]">{item.title}</p>
+              </div>
+
+              <p class="type-card-body min-w-0 flex-1">{item.text}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

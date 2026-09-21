@@ -1,0 +1,35 @@
+---
+import { cta } from "../../data/content";
+import Button from "../ui/Button.astro";
+
+/**
+ * «Создадим сайт за 390 000 ₽. Обсудим?» (Figma 165:539), секция 1728×567.
+ * Поля 146/144, верхняя граница rgba(255,255,255,0.08).
+ * Заголовок 108px в блоке 952, справа колонка 472.
+ */
+---
+
+<section id="contact" class="border-t border-white/8 bg-surface">
+  <div
+    class="container-content flex flex-col gap-12 py-20 lg:flex-row lg:items-start lg:justify-between lg:gap-0 lg:py-36"
+  >
+    {/* Две фразы отдельными блоками. Реплику отделяет цвет, поэтому
+        отступ минимальный — только чтобы не слипалось (в em, чтобы
+        держать пропорцию к кеглю). */}
+    <h2 class="reveal type-display-md lg:w-[66.3%]">
+      <span class="block lg:whitespace-pre-line">{cta.title}</span>
+      <span class="mt-[0.14em] block text-accent-ink">{cta.titleTail}</span>
+    </h2>
+
+    <div class="reveal flex flex-col gap-6 lg:w-[32.9%]" style="--reveal-delay: 100ms">
+      <p class="type-lead text-white">{cta.text}</p>
+
+      <div class="flex flex-wrap gap-4">
+        <Button href={cta.primary.href} variant="accent" opensContactModal>{cta.primary.label}</Button>
+        <Button href={cta.secondary.href} variant="outline" arrow={false}>
+          {cta.secondary.label}
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>

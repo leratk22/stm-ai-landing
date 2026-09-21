@@ -1,0 +1,45 @@
+---
+import { nav } from "../../data/content";
+import Button from "../ui/Button.astro";
+// Инлайном, а не через <Image>: 3.5 КБ, минус запрос,
+// и Astro не пытается прогнать svg через оптимизатор
+import logoSvg from "../../assets/logo-stm.svg?raw";
+---
+
+{/* В макете хедер на 36px от верха, поверх градиента */}
+<header class="absolute inset-x-0 top-0 z-50">
+  <div class="container-content flex items-center justify-between pt-9">
+    <a href="#" aria-label="STM — на главную">
+      <Fragment set:html={logoSvg} />
+    </a>
+
+    <nav class="hidden items-center gap-9 lg:flex" aria-label="Основная навигация">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            class="type-eyebrow text-white/70 transition-opacity duration-300 hover:text-white"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    {/* Прячем обёрткой: у Button в базе свой display (inline-flex),
+        и `hidden` на нём же не сработает — Tailwind отдаёт приоритет inline-flex */}
+    <div class="hidden sm:block">
+      <Button href="#contact" variant="solid" opensContactModal>Обсудить проект</Button>
+    </div>
+
+    <button
+      type="button"
+      class="grid size-11 place-items-center rounded-full bg-white/10 lg:hidden"
+      aria-label="Открыть меню"
+      aria-expanded="false"
+      data-menu-toggle
+    >
+      <span class="relative block h-px w-4 bg-white before:absolute before:-top-1.5 before:block before:h-px before:w-4 before:bg-white after:absolute after:top-1.5 after:block after:h-px after:w-4 after:bg-white"></span>
+    </button>
+  </div>
+</header>

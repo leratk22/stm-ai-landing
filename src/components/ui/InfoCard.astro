@@ -1,0 +1,38 @@
+---
+import Tag from "./Tag.astro";
+
+/**
+ * Карточка с пилюлями сверху и парой «заголовок + текст» снизу.
+ * Одна и та же в «Объединили студийный дизайн-опыт» (146:634)
+ * и в «Как проходит работа» (163:235).
+ *
+ * Макет: чёрная подложка, высота 360, padding 20/20/32,
+ * разрывы — 4 между пилюлями и 20 между заголовком и текстом.
+ */
+interface Props {
+  tags: string[];
+  title: string;
+  text: string;
+  class?: string;
+  style?: string;
+}
+
+const { tags, title, text, class: className = "", style } = Astro.props;
+---
+
+<article
+  class:list={[
+    "flex min-h-[22.5rem] flex-col justify-between bg-black p-5 pb-8",
+    className,
+  ]}
+  style={style}
+>
+  <div class="flex flex-wrap gap-1">
+    {tags.map((tag) => <Tag>{tag}</Tag>)}
+  </div>
+
+  <div>
+    <h3 class="type-h3">{title}</h3>
+    <p class="type-card-body mt-5">{text}</p>
+  </div>
+</article>

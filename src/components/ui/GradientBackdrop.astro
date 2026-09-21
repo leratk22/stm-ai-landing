@@ -1,0 +1,54 @@
+---
+/**
+ * Анимированная градиентная подложка (WebGL2-шейдер).
+ *
+ * Под канвасом — статичный CSS-градиент, собранный по пиксельному замеру
+ * экспорта из Figma (`src/assets/hero-gradient.png`). Он же остаётся, если
+ * WebGL недоступен или включён prefers-reduced-motion. Сам PNG весит 2 МБ,
+ * поэтому в загрузку не идёт — CSS повторяет его достаточно близко.
+ *
+ * Поверх — затемнение к низу: в макете `rgba(0,0,0,0) → rgba(0,0,0,0.8)`.
+ */
+interface Props {
+  accent?: string;
+  deep?: string;
+  intensity?: number;
+  class?: string;
+}
+
+const {
+  accent = "#ff1e00",
+  deep = "#000000",
+  intensity = 1,
+  class: className = "",
+} = Astro.props;
+
+// Опорные точки взяты с замера: x=0.5 → #600000, x=0.75 → #dd100d,
+// x=1 → #ff3314, левый нижний угол → #ff6d1c
+const fallback = [
+  "radial-gradient(62% 58% at 0% 100%, #ff6d1c 0%, rgba(255,60,20,0.42) 30%, transparent 64%)",
+  `linear-gradient(90deg, ${deep} 0%, ${deep} 26%, #600000 52%, #dd100d 76%, #ff3314 100%)`,
+].join(",");
+---
+
+<div class:list={["absolute inset-0 -z-10 overflow-hidden", className]} aria-hidden="true">
+  <div class="absolute inset-0" style={`background: ${fallback}`}></div>
+
+  <canvas
+    class="gradient-canvas absolute inset-0 block h-full w-full opacity-0 transition-opacity duration-700"
+    data-accent={accent}
+    data-deep={deep}
+    data-intensity={String(intensity)}></canvas>
+
+  <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/80"></div>
+</div>
+
+<script>
+  import { initGradient } from "../../scripts/gradient";
+
+  document.querySelectorAll<HTMLCanvasElement>(".gradient-canvas").forEach((canvas) => {
+    // Проявляем канвас только когда контекст реально поднялся,
+    // иначе на слабом железе мелькнёт чёрный прямоугольник поверх подложки
+    if (initGradient(canvas)) canvas.classList.replace("opacity-0", "opacity-100");
+  });
+</script>

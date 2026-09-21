@@ -1,0 +1,47 @@
+---
+import { advantages } from "../../data/content";
+import GridLines from "../ui/GridLines.astro";
+import InfoCard from "../ui/InfoCard.astro";
+
+/**
+ * «Объединили студийный дизайн-опыт и возможности AI-разработки» (Figma 146:634).
+ * Ритм макета (секция 1728×809): заголовок 72px, лид 210px,
+ * горизонтальный разделитель 393px, карточки 401…761px, низ 48px.
+ */
+---
+
+<section id="about" class="relative overflow-hidden bg-surface">
+  <GridLines />
+
+  <div class="container-content relative pt-[4.5rem]">
+    <h2 class="reveal type-h2 lg:max-w-[69.5%] lg:whitespace-pre-line">
+      {advantages.title.lead}<span class="text-accent-ink">{advantages.title.accent}</span>
+    </h2>
+
+    <p
+      class="reveal type-lead mt-8 text-white lg:max-w-[69.5%]"
+      style="--reveal-delay: 80ms"
+    >
+      {advantages.subtitle}
+    </p>
+  </div>
+
+  {/* Горизонтальный разделитель во всю ширину — в макете на 393px */}
+  <div class="mt-[7.1875rem] h-px w-full bg-line"></div>
+
+  <div class="container-content relative pt-2 pb-12">
+    <div class="grid gap-2 lg:grid-cols-2">
+      {
+        advantages.cards.map((card, i) => (
+          <InfoCard
+            class="reveal"
+            style={`--reveal-delay: ${i * 100}ms`}
+            tags={card.tags}
+            title={card.title}
+            text={card.text}
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>

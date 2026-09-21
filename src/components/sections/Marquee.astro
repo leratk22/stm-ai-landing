@@ -1,0 +1,35 @@
+---
+/**
+ * Бегущая строка. В макете это статичный ряд, разложенный по ширине,
+ * но на референсе (atlasdesign.framer.ai) он анимирован — берём движение
+ * оттуда, стиль из макета: 12px, uppercase, прозрачность 70%, точки 4px.
+ * Трек дублируется: анимация сдвигает на −50%, поэтому склейка незаметна.
+ */
+interface Props {
+  items: string[];
+  duration?: string;
+  class?: string;
+  innerClass?: string;
+}
+
+const { items, duration = "42s", class: className = "", innerClass = "py-6" } = Astro.props;
+const track = [...items, ...items];
+---
+
+<div class:list={["relative", className]}>
+  <div class:list={["overflow-hidden", innerClass]}>
+    <div class="marquee" style={`--marquee-duration: ${duration}`}>
+      {
+        track.map((item, i) => (
+          <div
+            class="flex shrink-0 items-center gap-14 pr-14"
+            aria-hidden={i >= items.length ? "true" : undefined}
+          >
+            <span class="type-eyebrow whitespace-nowrap text-white/70">{item}</span>
+            <span class="size-1 shrink-0 rounded-full bg-white/70" />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>

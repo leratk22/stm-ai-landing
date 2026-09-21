@@ -1,0 +1,74 @@
+---
+import { scope } from "../../data/content";
+
+/**
+ * «Что включено в проект» (Figma 163:132), секция 1728×475.
+ *
+ * Сетка 3×2. У каждой ячейки верхняя граница, у средней колонки —
+ * ещё и боковые. Количество колонок меняется с шириной, поэтому
+ * боковые границы навешиваются через nth-child в <style> ниже,
+ * а не классами: иначе на каждом брейкпоинте пришлось бы
+ * переопределять «какая ячейка первая в ряду».
+ *
+ * Индекс здесь — обычный текст в колонке 32px, а не пилюля
+ * как в «Кому подойдет». Так в макете.
+ *
+ * Границы висят на самой ячейке, а `.reveal` — на её содержимом.
+ * Если повесить и то и другое на один элемент, до появления ячейки
+ * пропадает и её линия, и сетка выглядит оборванной.
+ */
+---
+
+<section id="scope" class="bg-black">
+  <div class="container-content flex flex-col gap-10 pt-20 lg:gap-14 lg:pt-28">
+    <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+      <h2 class="reveal type-h2 lg:max-w-[47.5rem]">{scope.title}</h2>
+
+      <p class="reveal type-card-body lg:w-[25.5rem] lg:text-right" style="--reveal-delay: 80ms">
+        {scope.note}
+      </p>
+    </div>
+
+    <div class="scope-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      {
+        scope.items.map((item, i) => (
+          <article class="lg:min-h-[7.25rem]">
+            <div
+              class="reveal flex items-start gap-5 px-5 py-6"
+              style={`--reveal-delay: ${i * 60}ms`}
+            >
+              <span class="type-eyebrow w-8 shrink-0 pt-1 text-white/70">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 class="type-h3 min-w-0 flex-1">{item}</h3>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .scope-grid > * {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Две колонки: граница у каждой второй ячейки */
+  @media (min-width: 48rem) {
+    .scope-grid > *:not(:nth-child(2n + 1)) {
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  /* Три колонки: сбрасываем правило для двух и ставим для трёх */
+  @media (min-width: 64rem) {
+    .scope-grid > *:not(:nth-child(2n + 1)) {
+      border-left: none;
+    }
+
+    .scope-grid > *:not(:nth-child(3n + 1)) {
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  }
+</style>

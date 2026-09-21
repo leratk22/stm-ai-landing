@@ -1,0 +1,137 @@
+---
+import { contactForm as t, legal } from "../../data/content";
+
+/**
+ * Поп-ап «Обсудить проект».
+ *
+ * Собран на нативном <dialog>: из коробки даёт модальное поведение,
+ * ловушку фокуса, закрытие по Esc и подложку — без своей реализации
+ * и без библиотеки.
+ *
+ * Открывается перехватом клика по ссылкам [data-contact-trigger].
+ * Сами ссылки ведут на #contact, поэтому без JS кнопка не ломается,
+ * а просто доскролливает до секции с контактами.
+ *
+ * ТОЧКА ПОДКЛЮЧЕНИЯ: адрес обработчика задаётся в PUBLIC_FORM_ENDPOINT
+ * (.env). Пока он пуст, форма не отправляется и честно об этом говорит,
+ * а не показывает ложный успех.
+ */
+const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? "";
+const field =
+  "w-full rounded-[4px] border border-white/12 bg-white/5 px-4 py-3 text-[16px] text-white placeholder:text-white/35 outline-none transition-colors duration-200 focus-visible:border-white/40";
+---
+
+<dialog
+  id="contact-modal"
+  class="contact-modal m-auto w-[min(34rem,calc(100vw-2rem))] rounded-[4px] border border-white/12 bg-surface p-0 text-white backdrop:bg-black/70 backdrop:backdrop-blur-sm"
+  aria-labelledby="contact-modal-title"
+  data-endpoint={endpoint}
+>
+  <div class="relative p-6 sm:p-8">
+    <button
+      type="button"
+      class="absolute top-4 right-4 grid size-9 place-items-center rounded-full text-[20px] leading-none text-white/60 transition-colors duration-200 hover:bg-white/10 hover:text-white"
+      data-modal-close
+      aria-label={t.close}>×</button
+    >
+
+    <div data-modal-view="form">
+      <h2 id="contact-modal-title" class="type-h3 pr-10">{t.title}</h2>
+      <p class="type-card-body mt-2">{t.subtitle}</p>
+
+      <form class="mt-6 flex flex-col gap-4" novalidate data-contact-form>
+        <label class="flex flex-col gap-2">
+          <span class="type-eyebrow text-white/70">{t.fields.name.label}</span>
+          <input
+            class={field}
+            type="text"
+            name="name"
+            required
+            autocomplete="name"
+            placeholder={t.fields.name.placeholder}
+          />
+        </label>
+
+        <label class="flex flex-col gap-2">
+          <span class="type-eyebrow text-white/70">{t.fields.contact.label}</span>
+          <input
+            class={field}
+            type="text"
+            name="contact"
+            required
+            placeholder={t.fields.contact.placeholder}
+          />
+        </label>
+
+        <label class="flex flex-col gap-2">
+          <span class="type-eyebrow text-white/70">{t.fields.task.label}</span>
+          <textarea class={`${field} min-h-24 resize-y`} name="task" rows="3" placeholder={t.fields.task.placeholder}
+          ></textarea>
+        </label>
+
+        <label class="flex items-start gap-3 text-[14px] leading-[1.4] text-white/50">
+          <input
+            type="checkbox"
+            name="consent"
+            required
+            class="mt-0.5 size-4 shrink-0 accent-[var(--color-accent)]"
+          />
+          <span>
+            {t.consentBefore}{" "}
+            <a href={legal.links[1].href} class="underline hover:text-white">{t.consentLink}</a>
+          </span>
+        </label>
+
+        <p class="hidden text-[14px] leading-[1.4] text-accent-ink" data-form-error role="alert"></p>
+
+        <button
+          type="submit"
+          class="mt-2 inline-flex h-[50px] items-center justify-center gap-2 rounded-full bg-accent px-[26px] text-[16px] font-medium tracking-[-0.02em] text-white transition-colors duration-300 hover:bg-accent-hover disabled:opacity-60"
+        >
+          <span data-submit-label>{t.submit}</span>
+        </button>
+      </form>
+    </div>
+
+    <div class="hidden py-6 text-center" data-modal-view="success">
+      <p class="type-h3">{t.successTitle}</p>
+      <p class="type-card-body mt-2">{t.successText}</p>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  /* Родное поведение <dialog> плюс мягкое появление */
+  .contact-modal[open] {
+    animation: modal-in 0.25s var(--ease-out-soft);
+  }
+
+  .contact-modal[open]::backdrop {
+    animation: modal-backdrop-in 0.25s var(--ease-out-soft);
+  }
+
+  @keyframes modal-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+  }
+
+  @keyframes modal-backdrop-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .contact-modal[open],
+    .contact-modal[open]::backdrop {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  import { initContactModal } from "../../scripts/contact-modal";
+  initContactModal();
+</script>
