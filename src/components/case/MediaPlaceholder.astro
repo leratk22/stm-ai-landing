@@ -1,0 +1,35 @@
+---
+/**
+ * Заглушка под картинку кейса: держит пропорцию и подписывает,
+ * какого размера нужен файл. Размер — вдвое больше отображаемого
+ * на макетной ширине, чтобы на ретине картинка была чёткой.
+ *
+ * Стиль тот же, что у плашек под превью на главной: стекло,
+ * мягкая обводка, скругление 4px.
+ */
+interface Props {
+  /** CSS aspect-ratio, например "31 / 27" */
+  ratio: string;
+  label: string;
+  /** Рекомендуемый размер файла, например "1240×1080" */
+  size: string;
+  class?: string;
+}
+
+const { ratio, label, size, class: className = "" } = Astro.props;
+---
+
+<div
+  class:list={[
+    "grid place-items-center overflow-hidden rounded-[4px] border border-white/12 bg-white/5",
+    className,
+  ]}
+  style={`aspect-ratio: ${ratio}`}
+  role="img"
+  aria-label={`Заглушка: ${label}`}
+>
+  <div class="flex flex-col items-center gap-1 text-center">
+    <span class="type-eyebrow text-white/50">{label}</span>
+    <span class="text-[13px] text-white/30">{size}</span>
+  </div>
+</div>

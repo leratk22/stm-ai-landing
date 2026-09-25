@@ -1,0 +1,29 @@
+---
+import GradientBackdrop from "../ui/GradientBackdrop.astro";
+import type { CaseStudy } from "../../data/cases";
+
+/**
+ * Герой кейса. Каркас референса: градиент во всю ширину,
+ * крупный заголовок прижат к низу слева. Над ним — тип и год,
+ * как в подписи карточки на главной.
+ */
+interface Props {
+  study: CaseStudy;
+}
+
+const { study } = Astro.props;
+---
+
+<section class="relative isolate flex min-h-[26rem] flex-col justify-end overflow-hidden lg:min-h-[30rem]">
+  <GradientBackdrop />
+
+  <div class="container-content pt-32 pb-12 lg:pb-14">
+    <div class="reveal flex items-center gap-2">
+      <span class="type-eyebrow text-white/70">{study.kind}</span>
+      <span class="size-1 shrink-0 rounded-full bg-white/70" aria-hidden="true"></span>
+      <span class="type-eyebrow text-white/70">{study.year}</span>
+    </div>
+
+    <h1 class="reveal type-display-md mt-5" style="--reveal-delay: 80ms">{study.title}</h1>
+  </div>
+</section>

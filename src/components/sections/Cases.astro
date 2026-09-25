@@ -1,6 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import { cases } from "../../data/content";
+import { caseStudies } from "../../data/cases";
+import { withBase } from "../../lib/url";
 import GradientBackdrop from "../ui/GradientBackdrop.astro";
 import coffee from "../../assets/case-coffee-mood.png";
 import nova from "../../assets/case-nova-landing.png";
@@ -66,9 +68,13 @@ const media = [
 
     <div class="grid gap-2 md:grid-cols-2 lg:grid-cols-3">
       {
-        cases.items.map((item, i) => (
-          <article class="reveal flex flex-col gap-6" style={`--reveal-delay: ${i * 100}ms`}>
-            <div class="relative h-[22rem] overflow-hidden rounded-[4px] border border-white/12 bg-white/10 backdrop-blur-md lg:h-[27.24rem]">
+        caseStudies.map((item, i) => (
+          <a
+            href={withBase(`/cases/${item.slug}/`)}
+            class="reveal group flex flex-col gap-6"
+            style={`--reveal-delay: ${i * 100}ms`}
+          >
+            <div class="relative h-[22rem] overflow-hidden rounded-[4px] border border-white/12 bg-white/10 backdrop-blur-md transition-colors duration-300 group-hover:border-white/30 lg:h-[27.24rem]">
               <Image
                 src={media[i].src}
                 alt={media[i].alt}
@@ -86,7 +92,7 @@ const media = [
                 <span class="type-eyebrow text-white/70">{item.year}</span>
               </div>
             </div>
-          </article>
+          </a>
         ))
       }
     </div>

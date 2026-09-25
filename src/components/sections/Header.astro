@@ -1,5 +1,6 @@
 ---
 import { nav } from "../../data/content";
+import { withBase } from "../../lib/url";
 import Button from "../ui/Button.astro";
 // Инлайном, а не через <Image>: 3.5 КБ, минус запрос,
 // и Astro не пытается прогнать svg через оптимизатор
@@ -9,7 +10,7 @@ import logoSvg from "../../assets/logo-stm.svg?raw";
 {/* В макете хедер на 36px от верха, поверх градиента */}
 <header class="absolute inset-x-0 top-0 z-50">
   <div class="container-content flex items-center justify-between pt-9">
-    <a href="#" aria-label="STM — на главную">
+    <a href={withBase("/")} aria-label="STM — на главную">
       <Fragment set:html={logoSvg} />
     </a>
 
@@ -17,7 +18,7 @@ import logoSvg from "../../assets/logo-stm.svg?raw";
       {
         nav.map((item) => (
           <a
-            href={item.href}
+            href={withBase(`/${item.href}`)}
             class="type-eyebrow text-white/70 transition-opacity duration-300 hover:text-white"
           >
             {item.label}

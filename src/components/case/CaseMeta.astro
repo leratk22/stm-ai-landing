@@ -1,0 +1,30 @@
+---
+import type { CaseMeta } from "../../data/cases";
+
+/**
+ * Метаданные проекта: пары «подпись — значение» сеткой 2×2.
+ * На десктопе колонка липкая и едет рядом с лентой, как в референсе.
+ *
+ * Отступ сверху у sticky — 40px: хедер сейчас не липкий и уезжает
+ * вместе со страницей. Если хедер станет липким, отступ надо увеличить
+ * на его высоту, иначе он наедет на метаданные.
+ */
+interface Props {
+  items: CaseMeta[];
+}
+
+const { items } = Astro.props;
+---
+
+<aside class="lg:sticky lg:top-10">
+  <dl class="grid grid-cols-2 gap-x-6 gap-y-8">
+    {
+      items.map((item) => (
+        <div class="flex flex-col gap-2">
+          <dt class="type-eyebrow text-accent-ink">{item.label}</dt>
+          <dd class="text-[1.125rem] leading-[1.4] text-white">{item.value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</aside>

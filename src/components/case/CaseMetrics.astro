@@ -1,0 +1,31 @@
+---
+import type { CaseMetric } from "../../data/cases";
+
+/**
+ * Ряд цифр в конце ленты. Разделительная линия сверху — каркас,
+ * она вне .reveal и видна всегда (правило из PLAN.md).
+ */
+interface Props {
+  title: string;
+  items: CaseMetric[];
+  class?: string;
+}
+
+const { title, items, class: className = "" } = Astro.props;
+---
+
+<section class={className}>
+  <h2 class="type-eyebrow text-white/70">{title}</h2>
+  <div class="mt-5 h-px w-full bg-white/10"></div>
+
+  <dl class="mt-8 grid grid-cols-3 gap-4">
+    {
+      items.map((item, i) => (
+        <div class="reveal flex flex-col gap-2" style={`--reveal-delay: ${i * 80}ms`}>
+          <dd class="type-h2">{item.value}</dd>
+          <dt class="type-eyebrow text-white/50">{item.label}</dt>
+        </div>
+      ))
+    }
+  </dl>
+</section>

@@ -1,0 +1,87 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/sections/Header.astro";
+import CtaSection from "../../components/sections/CtaSection.astro";
+import Legal from "../../components/sections/Legal.astro";
+import ContactModal from "../../components/ui/ContactModal.astro";
+import CaseHero from "../../components/case/CaseHero.astro";
+import CaseMeta from "../../components/case/CaseMeta.astro";
+import CaseSection from "../../components/case/CaseSection.astro";
+import CaseMetrics from "../../components/case/CaseMetrics.astro";
+import MediaPlaceholder from "../../components/case/MediaPlaceholder.astro";
+import RelatedCases from "../../components/case/RelatedCases.astro";
+import { caseStudies, caseUi, type CaseStudy } from "../../data/cases";
+
+/**
+ * Страница кейса — шаблон по образцу atlasdesign.framer.ai/projects/*.
+ *
+ * Сетка на 12 колонок: метаданные в колонках 1–4 (липкие),
+ * лента в колонках 7–12 — начинается ровно с середины, как в референсе.
+ * Ниже 1024px всё в одну колонку, метаданные уже не липкие.
+ *
+ * Ритм ленты: обложка → 80 → вводный абзац → 80 → разделы через 56 →
+ * галерея (разрыв 40) → 80 → итог → 96 → цифры.
+ */
+export function getStaticPaths() {
+  return caseStudies.map((study) => ({ params: { slug: study.slug }, props: { study } }));
+}
+
+interface Props {
+  study: CaseStudy;
+}
+
+const { study } = Astro.props;
+const related = caseStudies.filter((s) => s.slug !== study.slug).slice(0, 2);
+---
+
+<Layout
+  title={`${study.title} — кейс STM`}
+  description={`${study.kind}, ${study.year}. Кейс студии STM.`}
+>
+  <Header />
+  <main>
+    <CaseHero study={study} />
+
+    <div class="container-content pt-16 pb-24 lg:pt-24 lg:pb-32">
+      <div class="grid gap-12 lg:grid-cols-12 lg:gap-x-2">
+        <div class="reveal lg:col-span-4">
+          <CaseMeta items={study.meta} />
+        </div>
+
+        <article class="lg:col-span-6 lg:col-start-7">
+          <MediaPlaceholder class="reveal" ratio="31 / 27" label="Обложка" size="1240×1080" />
+
+          <p class="reveal type-lead mt-14 text-white lg:mt-20">{study.intro}</p>
+
+          {
+            study.sections.map((section, i) => (
+              <CaseSection section={section} class={i === 0 ? "mt-14 lg:mt-20" : "mt-14"} />
+            ))
+          }
+
+          <div class="mt-14 flex flex-col gap-10">
+            {
+              Array.from({ length: study.gallery }, (_, i) => (
+                <MediaPlaceholder
+                  class="reveal"
+                  ratio="31 / 22"
+                  label={`Изображение ${i + 1}`}
+                  size="1240×880"
+                />
+              ))
+            }
+          </div>
+
+          <CaseSection section={study.outcome} class="mt-14 lg:mt-20" />
+
+          <CaseMetrics title={caseUi.metricsTitle} items={study.metrics} class="mt-16 lg:mt-24" />
+        </article>
+      </div>
+    </div>
+
+    <RelatedCases items={related} />
+    <CtaSection />
+  </main>
+  <Legal />
+  <ContactModal />
+</Layout>
