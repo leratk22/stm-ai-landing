@@ -1,0 +1,92 @@
+---
+import { Image } from "astro:assets";
+import { caseStudies } from "../../data/cases";
+import { withBase } from "../../lib/url";
+
+/**
+ * Слайдер кейсов в герое. Плашка 414×220 из макета, в ней по очереди
+ * превью всех кейсов — каждое ведёт на страницу кейса.
+ *
+ * Под стрелками полоса прогресса: заполняется за 6 секунд, после чего
+ * слайд листается сам. Наведение, фокус, скрытая вкладка или уход
+ * слайдера с экрана ставят её на паузу. Логика — scripts/case-slider.ts.
+ *
+ * Без JS виден первый кейс, а стрелки и полоса скрыты (global.css):
+ * мёртвые кнопки хуже, чем их отсутствие.
+ */
+const total = caseStudies.length;
+---
+
+<div
+  class="group/slider relative aspect-[414/220] overflow-hidden rounded-[4px] border border-white/12 bg-white/10 backdrop-blur-md transition-colors duration-300 hover:border-white/30"
+  data-case-slider
+  role="region"
+  aria-roledescription="карусель"
+  aria-label="Кейсы студии"
+>
+  {
+    caseStudies.map((study, i) => (
+      <a
+        href={withBase(`/cases/${study.slug}/`)}
+        class:list={["case-slide absolute inset-0 touch-pan-y", { "is-active": i === 0 }]}
+        data-slide
+        role="group"
+        aria-roledescription="слайд"
+        aria-label={`${i + 1} из ${total}: ${study.title}`}
+        aria-hidden={i === 0 ? undefined : "true"}
+        inert={i !== 0}
+      >
+        <Image
+          src={study.preview.src}
+          alt={study.preview.alt}
+          widths={[study.preview.hero.width, study.preview.hero.width * 2]}
+          sizes={`${study.preview.hero.width}px`}
+          class={study.preview.hero.class}
+          loading={i === 0 ? "eager" : "lazy"}
+          draggable="false"
+        />
+      </a>
+    ))
+  }
+
+  <div class="absolute right-2 bottom-2 z-10 flex flex-col gap-1" data-slider-controls>
+    <div class="flex gap-1">
+      <button
+        type="button"
+        class="grid size-8 place-items-center rounded-[2px] bg-surface text-[16px] text-white transition-colors hover:bg-surface-2"
+        aria-label="Предыдущий проект"
+        data-case-prev>←</button
+      >
+      <button
+        type="button"
+        class="grid size-8 place-items-center rounded-[2px] bg-surface text-[16px] text-white transition-colors hover:bg-surface-2"
+        aria-label="Следующий проект"
+        data-case-next>→</button
+      >
+    </div>
+
+    {/* Полоса прогресса автопрокрутки — шириной ровно в блок стрелок */}
+    <div class="h-0.5 overflow-hidden rounded-full bg-white/25" aria-hidden="true">
+      <div class="h-full origin-left scale-x-0 bg-white" data-slider-progress></div>
+    </div>
+  </div>
+
+  <p class="sr-only" aria-live="polite" data-slider-status></p>
+</div>
+
+<style>
+  .case-slide {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .case-slide.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+</style>
+
+<script>
+  import { initCaseSlider } from "../../scripts/case-slider";
+  document.querySelectorAll<HTMLElement>("[data-case-slider]").forEach(initCaseSlider);
+</script>

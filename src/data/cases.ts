@@ -41,6 +41,12 @@ export interface CasePreview {
   class: string;
   widths: number[];
   sizes: string;
+  /**
+   * Посадка в слайдере героя — плашка там широкая, 414×220.
+   * Все устройства прижаты к верху и обрезаны снизу, как телефон в макете.
+   * width — ширина картинки в px на максимальной ширине плашки.
+   */
+  hero: { class: string; width: number };
 }
 
 export interface CaseStudy {
@@ -132,6 +138,8 @@ export const caseStudies: CaseStudy[] = [
       class: "absolute left-1/2 top-5 h-[137.7%] w-[61.9%] -translate-x-1/2 object-cover object-top",
       widths: [300, 600],
       sizes: "(min-width: 1024px) 300px, 62vw",
+      // Как в макете: 231px из 414, сверху 3px
+      hero: { class: "absolute left-1/2 top-[3px] h-auto w-[56%] -translate-x-1/2", width: 232 },
     },
   }),
   fromTemplate({
@@ -146,6 +154,8 @@ export const caseStudies: CaseStudy[] = [
       class: "absolute bottom-0 left-1/2 h-[96.8%] w-[134%] -translate-x-1/2 object-cover",
       widths: [640, 1280],
       sizes: "(min-width: 1024px) 640px, 134vw",
+      // Почти во всю ширину: целиком виден экран, клавиатура уходит за край
+      hero: { class: "absolute left-1/2 top-3 h-auto w-[92%] -translate-x-1/2", width: 380 },
     },
   }),
   // Платформа экомониторинга. Название компании не указываем.
@@ -208,6 +218,7 @@ export const caseStudies: CaseStudy[] = [
         "absolute left-1/2 top-1/2 h-[70.9%] w-[91.8%] -translate-x-1/2 -translate-y-1/2 object-cover",
       widths: [440, 880],
       sizes: "(min-width: 1024px) 440px, 92vw",
+      hero: { class: "absolute left-1/2 top-4 h-auto w-[82%] -translate-x-1/2", width: 340 },
     },
   }),
 ];

@@ -161,6 +161,11 @@
   }
 }
 
+/* Без JS управление слайдером не работает — не показываем его вовсе */
+html:not(.js) [data-slider-controls] {
+  display: none;
+}
+
 /* Уважаем системную настройку: гасим весь движ */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
