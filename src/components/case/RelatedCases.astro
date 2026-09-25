@@ -1,61 +1,37 @@
 ---
-import Button from "../ui/Button.astro";
-import MediaPlaceholder from "./MediaPlaceholder.astro";
+import CaseCard from "../ui/CaseCard.astro";
 import { caseUi, type CaseStudy } from "../../data/cases";
-import { withBase } from "../../lib/url";
 
 /**
  * «Другие проекты» внизу кейса.
  *
- * Раскладка из референса: две карточки не рядом, а по краям сетки —
- * первая в колонках 1–4, вторая в 9–12, середина пустая. Ниже по центру
- * кнопка ко всем проектам.
+ * Сетка и карточка — ровно как в секции кейсов на главной: три колонки,
+ * общий компонент CaseCard. Кейсов пока три, значит «других» два —
+ * они встают в первые две колонки, третья остаётся пустой.
+ *
+ * Кнопки «Все проекты» нет: отдельной страницы со всеми проектами
+ * пока не существует, а на главной видны все три.
  *
  * Заголовок — type-h2, а не крупный дисплейный, как в референсе:
- * сразу за блоком идёт CTA со своим 108px-заголовком, и два гиганта
- * подряд давили бы друг друга.
+ * сразу за блоком идёт CTA со своим 108px-заголовком.
  */
 interface Props {
   items: CaseStudy[];
 }
 
 const { items } = Astro.props;
-const placement = ["lg:col-span-4", "lg:col-span-4 lg:col-start-9"];
 ---
 
 <section class="bg-surface">
   <div class="container-content py-20 lg:py-28">
     <h2 class="reveal type-h2">{caseUi.relatedTitle}</h2>
 
-    <div class="mt-10 grid gap-10 sm:grid-cols-2 lg:mt-14 lg:grid-cols-12 lg:gap-x-2 lg:gap-y-0">
+    <div class="mt-10 grid gap-2 md:grid-cols-2 lg:mt-12 lg:grid-cols-3">
       {
-        items.map((item, i) => (
-          <a
-            href={withBase(`/cases/${item.slug}/`)}
-            class:list={["reveal group flex flex-col gap-6", placement[i] ?? "lg:col-span-4"]}
-            style={`--reveal-delay: ${i * 100}ms`}
-          >
-            <MediaPlaceholder
-              ratio="100 / 117"
-              label="Превью"
-              size="800×936"
-              class="transition-colors duration-300 group-hover:border-white/30"
-            />
-            <div class="flex flex-col gap-2">
-              <div class="flex items-center gap-2">
-                <span class="type-eyebrow text-white/70">{item.kind}</span>
-                <span class="size-1 shrink-0 rounded-full bg-white/70" aria-hidden="true" />
-                <span class="type-eyebrow text-white/70">{item.year}</span>
-              </div>
-              <h3 class="type-h3">{item.title}</h3>
-            </div>
-          </a>
+        items.map((study, i) => (
+          <CaseCard study={study} class="reveal" style={`--reveal-delay: ${i * 100}ms`} />
         ))
       }
-    </div>
-
-    <div class="reveal mt-14 flex justify-center">
-      <Button href={withBase("/#works")} variant="outline" arrow={false}>{caseUi.allProjects}</Button>
     </div>
   </div>
 </section>

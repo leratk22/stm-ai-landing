@@ -1,12 +1,8 @@
 ---
-import { Image } from "astro:assets";
 import { cases } from "../../data/content";
 import { caseStudies } from "../../data/cases";
-import { withBase } from "../../lib/url";
 import GradientBackdrop from "../ui/GradientBackdrop.astro";
-import coffee from "../../assets/case-coffee-mood.png";
-import nova from "../../assets/case-nova-landing.png";
-import saas from "../../assets/case-saas-dashboard.png";
+import CaseCard from "../ui/CaseCard.astro";
 
 /**
  * «Мы обладаем серьёзной экспертизой» (Figma 163:319), секция 1728×937.
@@ -14,47 +10,16 @@ import saas from "../../assets/case-saas-dashboard.png";
  * Фон тот же, что в герое: в макете это экспорт градиента + затемнение
  * к низу, у нас — общий GradientBackdrop с шейдером.
  *
- * Плашка под превью — «стекло»: полупрозрачная заливка, мягкая обводка
- * и backdrop-blur по градиенту за ней. Размытие пересчитывается каждый
- * кадр вместе с шейдером, поэтому взято среднее (12px), а не максимум.
+ * Карточки — общий компонент ui/CaseCard, тот же, что в «Других
+ * проектах» на страницах кейсов. Как превью вписано в плашку, задаёт
+ * сам кейс в src/data/cases.ts (поле preview).
  *
- * Превью не заливают карточку целиком, а вписаны в неё каждое по-своему
- * (размеры из макета, в долях от карточки 473×436):
- *   телефон  293×600  — прижат к верху, обрезан снизу;
- *   ноутбук  634×422  — шире карточки, обрезан по бокам, прижат к низу;
- *   дашборд  435×309  — целиком по центру.
- * Отсюда разные width/height у каждой картинки.
+ * Размытие плашки пересчитывается каждый кадр вместе с шейдером,
+ * поэтому взято среднее (12px), а не максимум.
  *
  * Нижняя полоса — статичная, позиции разнесены по всей ширине,
  * как в макете. Бегущей строкой она была ошибкой.
  */
-const media = [
-  {
-    src: coffee,
-    alt: "Кейс: мобильное приложение кофейни",
-    // 293/473 ширины, 600/436 высоты, прижат к верху на 20px
-    class: "absolute left-1/2 top-5 h-[137.7%] w-[61.9%] -translate-x-1/2 object-cover object-top",
-    widths: [300, 600],
-    sizes: "(min-width: 1024px) 300px, 62vw",
-  },
-  {
-    src: nova,
-    alt: "Кейс: лендинг студии Nova",
-    // 634/473 ширины — шире карточки, поэтому обрезается по бокам
-    class: "absolute bottom-0 left-1/2 h-[96.8%] w-[134%] -translate-x-1/2 object-cover",
-    widths: [640, 1280],
-    sizes: "(min-width: 1024px) 640px, 134vw",
-  },
-  {
-    src: saas,
-    alt: "Кейс: дашборд SaaS-продукта",
-    // Помещается целиком, по центру
-    class:
-      "absolute left-1/2 top-1/2 h-[70.9%] w-[91.8%] -translate-x-1/2 -translate-y-1/2 object-cover",
-    widths: [440, 880],
-    sizes: "(min-width: 1024px) 440px, 92vw",
-  },
-];
 ---
 
 <section id="works" class="relative isolate overflow-hidden">
@@ -68,31 +33,8 @@ const media = [
 
     <div class="grid gap-2 md:grid-cols-2 lg:grid-cols-3">
       {
-        caseStudies.map((item, i) => (
-          <a
-            href={withBase(`/cases/${item.slug}/`)}
-            class="reveal group flex flex-col gap-6"
-            style={`--reveal-delay: ${i * 100}ms`}
-          >
-            <div class="relative h-[22rem] overflow-hidden rounded-[4px] border border-white/12 bg-white/10 backdrop-blur-md transition-colors duration-300 group-hover:border-white/30 lg:h-[27.24rem]">
-              <Image
-                src={media[i].src}
-                alt={media[i].alt}
-                widths={media[i].widths}
-                sizes={media[i].sizes}
-                class={media[i].class}
-              />
-            </div>
-
-            <div class="flex flex-col gap-2">
-              <h3 class="type-h3">{item.title}</h3>
-              <div class="flex items-center gap-2">
-                <span class="type-eyebrow text-white/70">{item.kind}</span>
-                <span class="size-1 shrink-0 rounded-full bg-white/70" />
-                <span class="type-eyebrow text-white/70">{item.year}</span>
-              </div>
-            </div>
-          </a>
+        caseStudies.map((study, i) => (
+          <CaseCard study={study} class="reveal" style={`--reveal-delay: ${i * 100}ms`} />
         ))
       }
     </div>

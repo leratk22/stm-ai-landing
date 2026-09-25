@@ -1,0 +1,47 @@
+---
+import { Image } from "astro:assets";
+import type { CaseStudy } from "../../data/cases";
+import { withBase } from "../../lib/url";
+
+/**
+ * Карточка кейса — одна и та же на главной и в «Других проектах».
+ *
+ * Плашка под превью — «стекло»: полупрозрачная заливка, мягкая обводка
+ * и backdrop-blur. Размер 473×436 на макетной ширине; как картинка
+ * вписана в плашку, задаёт сам кейс (поле preview.class).
+ */
+interface Props {
+  study: CaseStudy;
+  class?: string;
+  style?: string;
+}
+
+const { study, class: className = "", style } = Astro.props;
+---
+
+<a
+  href={withBase(`/cases/${study.slug}/`)}
+  class:list={["group flex flex-col gap-6", className]}
+  style={style}
+>
+  <div
+    class="relative h-[22rem] overflow-hidden rounded-[4px] border border-white/12 bg-white/10 backdrop-blur-md transition-colors duration-300 group-hover:border-white/30 lg:h-[27.24rem]"
+  >
+    <Image
+      src={study.preview.src}
+      alt={study.preview.alt}
+      widths={study.preview.widths}
+      sizes={study.preview.sizes}
+      class={study.preview.class}
+    />
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <h3 class="type-h3">{study.title}</h3>
+    <div class="flex items-center gap-2">
+      <span class="type-eyebrow text-white/70">{study.kind}</span>
+      <span class="size-1 shrink-0 rounded-full bg-white/70" aria-hidden="true"></span>
+      <span class="type-eyebrow text-white/70">{study.year}</span>
+    </div>
+  </div>
+</a>
