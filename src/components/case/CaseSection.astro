@@ -1,5 +1,6 @@
 ---
 import type { CaseSection } from "../../data/cases";
+import { tp } from "../../lib/typograph";
 
 /**
  * Раздел ленты: заголовок и абзацы.
@@ -17,6 +18,6 @@ const { section, class: className = "" } = Astro.props;
 <section class:list={["reveal", className]}>
   <h2 class="type-h3">{section.title}</h2>
   <div class="mt-5 flex flex-col gap-4">
-    {section.paragraphs.map((p) => <p class="type-card-body text-white/70">{p}</p>)}
+    {section.paragraphs.map((p) => <p class="type-card-body text-white/70">{tp(p)}</p>)}
   </div>
 </section>

@@ -1,5 +1,6 @@
 ---
 import type { CaseMeta } from "../../data/cases";
+import { tp } from "../../lib/typograph";
 
 /**
  * Метаданные проекта: пары «подпись — значение» сеткой 2×2.
@@ -22,7 +23,7 @@ const { items } = Astro.props;
       items.map((item) => (
         <div class="flex flex-col gap-2">
           <dt class="type-eyebrow text-accent-ink">{item.label}</dt>
-          <dd class="text-[1.125rem] leading-[1.4] text-white">{item.value}</dd>
+          <dd class="text-[1.125rem] leading-[1.4] text-white">{tp(item.value)}</dd>
         </div>
       ))
     }

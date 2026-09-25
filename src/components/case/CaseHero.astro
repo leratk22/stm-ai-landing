@@ -1,6 +1,7 @@
 ---
 import GradientBackdrop from "../ui/GradientBackdrop.astro";
 import type { CaseStudy } from "../../data/cases";
+import { tp } from "../../lib/typograph";
 
 /**
  * Герой кейса. Каркас референса: градиент во всю ширину,
@@ -24,6 +25,6 @@ const { study } = Astro.props;
       <span class="type-eyebrow text-white/70">{study.year}</span>
     </div>
 
-    <h1 class="reveal type-display-md mt-5" style="--reveal-delay: 80ms">{study.title}</h1>
+    <h1 class="reveal type-display-md mt-5" style="--reveal-delay: 80ms">{tp(study.title)}</h1>
   </div>
 </section>

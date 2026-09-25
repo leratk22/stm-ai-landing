@@ -1,5 +1,6 @@
 ---
 import type { CaseMetric } from "../../data/cases";
+import { tp } from "../../lib/typograph";
 
 /**
  * Ряд цифр в конце ленты. Разделительная линия сверху — каркас,
@@ -22,8 +23,8 @@ const { title, items, class: className = "" } = Astro.props;
     {
       items.map((item, i) => (
         <div class="reveal flex flex-col gap-2" style={`--reveal-delay: ${i * 80}ms`}>
-          <dd class="type-h2">{item.value}</dd>
-          <dt class="type-eyebrow text-white/50">{item.label}</dt>
+          <dd class="type-h2">{tp(item.value)}</dd>
+          <dt class="type-eyebrow text-white/50">{tp(item.label)}</dt>
         </div>
       ))
     }

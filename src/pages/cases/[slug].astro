@@ -11,6 +11,7 @@ import CaseMetrics from "../../components/case/CaseMetrics.astro";
 import MediaPlaceholder from "../../components/case/MediaPlaceholder.astro";
 import RelatedCases from "../../components/case/RelatedCases.astro";
 import { caseStudies, caseUi, type CaseStudy } from "../../data/cases";
+import { tp } from "../../lib/typograph";
 
 /**
  * Страница кейса — шаблон по образцу atlasdesign.framer.ai/projects/*.
@@ -32,6 +33,9 @@ interface Props {
 
 const { study } = Astro.props;
 const related = caseStudies.filter((s) => s.slug !== study.slug).slice(0, 2);
+const galleryLabels = Array.isArray(study.gallery)
+  ? study.gallery
+  : Array.from({ length: study.gallery }, (_, i) => `Изображение ${i + 1}`);
 ---
 
 <Layout
@@ -51,7 +55,7 @@ const related = caseStudies.filter((s) => s.slug !== study.slug).slice(0, 2);
         <article class="lg:col-span-6 lg:col-start-7">
           <MediaPlaceholder class="reveal" ratio="31 / 27" label="Обложка" size="1240×1080" />
 
-          <p class="reveal type-lead mt-14 text-white lg:mt-20">{study.intro}</p>
+          <p class="reveal type-lead mt-14 text-white lg:mt-20">{tp(study.intro)}</p>
 
           {
             study.sections.map((section, i) => (
@@ -61,13 +65,8 @@ const related = caseStudies.filter((s) => s.slug !== study.slug).slice(0, 2);
 
           <div class="mt-14 flex flex-col gap-10">
             {
-              Array.from({ length: study.gallery }, (_, i) => (
-                <MediaPlaceholder
-                  class="reveal"
-                  ratio="31 / 22"
-                  label={`Изображение ${i + 1}`}
-                  size="1240×880"
-                />
+              galleryLabels.map((label) => (
+                <MediaPlaceholder class="reveal" ratio="31 / 22" label={label} size="1240×880" />
               ))
             }
           </div>
