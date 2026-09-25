@@ -28,6 +28,9 @@ export function initCaseSlider(root: HTMLElement): void {
   let timer: Animation | null = null;
   const pauses = new Set<string>();
 
+  // Без автопрокрутки полосе нечего показывать — прячем пустую дорожку
+  if (reduced) root.querySelector<HTMLElement>("[data-slider-track]")?.setAttribute("hidden", "");
+
   function restartTimer() {
     timer?.cancel();
     timer = null;

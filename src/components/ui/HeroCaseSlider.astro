@@ -65,9 +65,12 @@ const total = caseStudies.length;
       >
     </div>
 
-    {/* Полоса прогресса автопрокрутки — шириной ровно в блок стрелок */}
-    <div class="h-0.5 overflow-hidden rounded-full bg-white/25" aria-hidden="true">
-      <div class="h-full origin-left scale-x-0 bg-white" data-slider-progress></div>
+    {/* Полоса прогресса автопрокрутки — шириной ровно в блок стрелок.
+        Исходное состояние задано через transform, а не классом scale-x-0:
+        в Tailwind 4 он ставит отдельное свойство scale, браузер перемножает
+        его с анимируемым transform — и полоса навсегда остаётся нулевой. */}
+    <div class="h-0.5 overflow-hidden rounded-full bg-white/25" aria-hidden="true" data-slider-track>
+      <div class="h-full origin-left bg-white" style="transform: scaleX(0)" data-slider-progress></div>
     </div>
   </div>
 
