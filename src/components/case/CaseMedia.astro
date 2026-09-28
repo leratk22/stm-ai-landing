@@ -1,0 +1,56 @@
+---
+import { Image } from "astro:assets";
+import type { CaseImage } from "../../data/cases";
+
+/**
+ * Стеклянная плашка под картинку кейса.
+ *
+ * Есть картинка — экран вписан внутрь с полями, как превью в карточках
+ * главной. Нет картинки — заглушка с подписью и нужным размером файла
+ * (вдвое больше отображаемого, под ретину).
+ *
+ * Поля — inset 5%: у абсолютного элемента проценты по горизонтали
+ * считаются от ширины плашки, по вертикали — от высоты. Внутреннее окно
+ * сохраняет пропорцию плашки, и кроп той же пропорции встаёт без обрезки.
+ */
+interface Props {
+  /** CSS aspect-ratio, например "31 / 27" */
+  ratio: string;
+  label: string;
+  /** Рекомендуемый размер файла, например "1240×1080" */
+  size: string;
+  image?: CaseImage;
+  eager?: boolean;
+  class?: string;
+}
+
+const { ratio, label, size, image, eager = false, class: className = "" } = Astro.props;
+---
+
+<div
+  class:list={[
+    "relative grid place-items-center overflow-hidden rounded-[4px] border border-white/12 bg-white/5",
+    className,
+  ]}
+  style={`aspect-ratio: ${ratio}`}
+  role={image ? undefined : "img"}
+  aria-label={image ? undefined : `Заглушка: ${label}`}
+>
+  {
+    image ? (
+      <Image
+        src={image.src}
+        alt={image.alt}
+        widths={[560, 1120]}
+        sizes="(min-width: 1024px) 45vw, 90vw"
+        class="absolute inset-[5%] h-[90%] w-[90%] rounded-[3px] object-cover"
+        loading={eager ? "eager" : "lazy"}
+      />
+    ) : (
+      <div class="flex flex-col items-center gap-1 text-center">
+        <span class="type-eyebrow text-white/50">{label}</span>
+        <span class="text-[13px] text-white/30">{size}</span>
+      </div>
+    )
+  }
+</div>

@@ -234,11 +234,12 @@ export const caseStudies: CaseStudy[] = [
       src: ecoPreview,
       alt: "Кейс: платформа экомониторинга — карта с датчиками и панель устройства",
       // Экран 1440×1024 почти совпадает по пропорциям с местом 435×309 — целиком, по центру
+      // Скругление — у нового экрана углы прямые, без него он сливается со стеклом
       class:
-        "absolute left-1/2 top-1/2 h-[70.9%] w-[91.8%] -translate-x-1/2 -translate-y-1/2 object-cover",
+        "absolute left-1/2 top-1/2 h-[70.9%] w-[91.8%] -translate-x-1/2 -translate-y-1/2 rounded-[3px] object-cover",
       widths: [440, 880],
       sizes: "(min-width: 1024px) 440px, 92vw",
-      hero: { class: "absolute left-1/2 top-4 h-auto w-[82%] -translate-x-1/2", width: 340 },
+      hero: { class: "absolute left-1/2 top-4 h-auto w-[82%] -translate-x-1/2 rounded-[3px]", width: 340 },
     },
   }),
 ];
