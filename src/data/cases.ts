@@ -18,8 +18,6 @@ import ecoPreview from "../assets/cases/saas/preview.png";
 import ecoCover from "../assets/cases/saas/cover.png";
 import ecoGeneral from "../assets/cases/saas/gallery-1-settings-general.png";
 import ecoAqi from "../assets/cases/saas/gallery-2-settings-aqi.png";
-import ecoStats from "../assets/cases/saas/gallery-3-statistics.png";
-import ecoStatsAlt from "../assets/cases/saas/gallery-4-statistics-alt.png";
 import ecoExport from "../assets/cases/saas/gallery-5-export.png";
 
 export interface CaseMeta {
@@ -227,13 +225,10 @@ export const caseStudies: CaseStudy[] = [
       // Корпус занимает 86% ширины файла: при 1.2 — 93% ширины рамки, по бокам ~23px стекла
       scale: 1.2,
     },
-    // Готовые диалоги от заказчика с прозрачным фоном — как есть, в стеклянных рамках.
-    // 3 и 4 — одна вкладка статистики, отличаются только состоянием кнопок.
+    // Готовые диалоги от заказчика с прозрачным фоном — как есть, в стеклянных рамках
     gallery: [
       { src: ecoGeneral, alt: "Настройки устройства, вкладка «Общие»: название, адрес и координаты GPS", fit: "contain" },
       { src: ecoAqi, alt: "Настройки устройства, вкладка «Конфигурация»: шкала качества воздуха из шести уровней", fit: "contain" },
-      { src: ecoStats, alt: "Статистика: конструктор графика — устройство, датчик, агрегация, тип и цвет", fit: "contain" },
-      { src: ecoStatsAlt, alt: "Статистика: конструктор графика", fit: "contain" },
       { src: ecoExport, alt: "Выгрузка данных: группа, устройство, период и формат CSV или PDF", fit: "contain" },
     ],
     outcome: {

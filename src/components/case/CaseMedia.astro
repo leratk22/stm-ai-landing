@@ -3,7 +3,8 @@ import { Image } from "astro:assets";
 import type { CaseImage } from "../../data/cases";
 
 /**
- * Стеклянная плашка под картинку кейса.
+ * Стеклянная плашка под картинку кейса. Заливка white/10, а не /5:
+ * на /5 тёмные экраны почти сливались с плашкой.
  *
  * Есть картинка — экран вписан внутрь с полями, как превью в карточках
  * главной. Нет картинки — заглушка с подписью и нужным размером файла
@@ -35,7 +36,7 @@ const imageClass =
 
 <div
   class:list={[
-    "relative grid place-items-center overflow-hidden rounded-[4px] border border-white/12 bg-white/5",
+    "relative grid place-items-center overflow-hidden rounded-[4px] border border-white/12 bg-white/10",
     className,
   ]}
   style={`aspect-ratio: ${ratio}`}
