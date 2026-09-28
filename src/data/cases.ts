@@ -14,10 +14,10 @@
 import type { ImageMetadata } from "astro";
 import coffee from "../assets/case-coffee-mood.png";
 import nova from "../assets/case-nova-landing.png";
-import ecoPreview from "../assets/cases/saas/preview.png";
 import ecoCover from "../assets/cases/saas/cover.png";
 import ecoGeneral from "../assets/cases/saas/gallery-1-settings-general.png";
 import ecoAqi from "../assets/cases/saas/gallery-2-settings-aqi.png";
+import ecoStats from "../assets/cases/saas/gallery-3-statistics.png";
 import ecoExport from "../assets/cases/saas/gallery-5-export.png";
 
 export interface CaseMeta {
@@ -229,6 +229,7 @@ export const caseStudies: CaseStudy[] = [
     gallery: [
       { src: ecoGeneral, alt: "Настройки устройства, вкладка «Общие»: название, адрес и координаты GPS", fit: "contain" },
       { src: ecoAqi, alt: "Настройки устройства, вкладка «Конфигурация»: шкала качества воздуха из шести уровней", fit: "contain" },
+      { src: ecoStats, alt: "Статистика: конструктор графика — устройство, датчик, агрегация, тип и цвет", fit: "contain" },
       { src: ecoExport, alt: "Выгрузка данных: группа, устройство, период и формат CSV или PDF", fit: "contain" },
     ],
     outcome: {
@@ -244,15 +245,20 @@ export const caseStudies: CaseStudy[] = [
       { value: "15 мин", label: "на настройку без выезда" },
     ],
     preview: {
-      src: ecoPreview,
-      alt: "Кейс: платформа экомониторинга — карта с датчиками и панель устройства",
-      // Экран 1440×1024 почти совпадает по пропорциям с местом 435×309 — целиком, по центру
-      // Скругление — у нового экрана углы прямые, без него он сливается со стеклом
-      class:
-        "absolute left-1/2 top-1/2 h-[70.9%] w-[91.8%] -translate-x-1/2 -translate-y-1/2 rounded-[3px] object-cover",
-      widths: [440, 880],
-      sizes: "(min-width: 1024px) 440px, 92vw",
-      hero: { class: "absolute left-1/2 top-4 h-auto w-[82%] -translate-x-1/2 rounded-[3px]", width: 340 },
+      src: ecoCover,
+      alt: "Кейс: платформа экомониторинга — главный экран в тёмной теме",
+      // Тот же мокап, что на обложке. Корпус — 86% ширины файла, остальное
+      // прозрачные поля. В карточке по центру: при 108% корпус 93% ширины
+      // плашки, как на обложке.
+      class: "absolute left-1/2 top-1/2 h-auto w-[108%] max-w-none -translate-x-1/2 -translate-y-1/2",
+      widths: [520, 1040],
+      sizes: "(min-width: 1024px) 520px, 110vw",
+      // В слайдере как остальные устройства: прижат к верху, низ за краем.
+      // Сдвиг вверх на 9.2% собственной высоты убирает прозрачное поле над корпусом.
+      hero: {
+        class: "absolute left-1/2 top-3 h-auto w-[104%] max-w-none -translate-x-1/2 -translate-y-[9.2%]",
+        width: 432,
+      },
     },
   }),
 ];
