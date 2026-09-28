@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/sections/Header.astro";
 import CtaSection from "../../components/sections/CtaSection.astro";
@@ -33,9 +34,13 @@ interface Props {
 
 const { study } = Astro.props;
 const related = caseStudies.filter((s) => s.slug !== study.slug).slice(0, 2);
-const galleryLabels = Array.isArray(study.gallery)
+const gallery = Array.isArray(study.gallery)
   ? study.gallery
   : Array.from({ length: study.gallery }, (_, i) => `Изображение ${i + 1}`);
+
+// Колонка ленты — половина контейнера на десктопе, вся ширина ниже
+const mediaSizes = "(min-width: 1024px) 50vw, 100vw";
+const mediaClass = "reveal h-auto w-full rounded-[4px] border border-white/12";
 ---
 
 <Layout
@@ -53,7 +58,20 @@ const galleryLabels = Array.isArray(study.gallery)
         </div>
 
         <article class="lg:col-span-6 lg:col-start-7">
-          <MediaPlaceholder class="reveal" ratio="31 / 27" label="Обложка" size="1240×1080" />
+          {
+            study.cover ? (
+              <Image
+                src={study.cover.src}
+                alt={study.cover.alt}
+                widths={[620, 1240]}
+                sizes={mediaSizes}
+                class={mediaClass}
+                loading="eager"
+              />
+            ) : (
+              <MediaPlaceholder class="reveal" ratio="31 / 27" label="Обложка" size="1240×1080" />
+            )
+          }
 
           <p class="reveal type-lead mt-14 text-white lg:mt-20">{tp(study.intro)}</p>
 
@@ -65,9 +83,19 @@ const galleryLabels = Array.isArray(study.gallery)
 
           <div class="mt-14 flex flex-col gap-10">
             {
-              galleryLabels.map((label) => (
-                <MediaPlaceholder class="reveal" ratio="31 / 22" label={label} size="1240×880" />
-              ))
+              gallery.map((item) =>
+                typeof item === "string" ? (
+                  <MediaPlaceholder class="reveal" ratio="31 / 22" label={item} size="1240×880" />
+                ) : (
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    widths={[620, 1240]}
+                    sizes={mediaSizes}
+                    class={mediaClass}
+                  />
+                ),
+              )
             }
           </div>
 

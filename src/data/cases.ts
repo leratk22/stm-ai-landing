@@ -14,7 +14,13 @@
 import type { ImageMetadata } from "astro";
 import coffee from "../assets/case-coffee-mood.png";
 import nova from "../assets/case-nova-landing.png";
-import saas from "../assets/case-saas-dashboard.png";
+import ecoPreview from "../assets/cases/saas/preview.png";
+import ecoCover from "../assets/cases/saas/cover.png";
+import ecoDevices from "../assets/cases/saas/gallery-1-devices.png";
+import ecoChart from "../assets/cases/saas/gallery-2-chart.png";
+import ecoAqi from "../assets/cases/saas/gallery-3-aqi.png";
+import ecoExport from "../assets/cases/saas/gallery-4-export.png";
+import ecoDark from "../assets/cases/saas/gallery-5-dark.png";
 
 export interface CaseMeta {
   label: string;
@@ -49,8 +55,16 @@ export interface CasePreview {
   hero: { class: string; width: number };
 }
 
+/** Картинка на странице кейса. Если её нет — выводится заглушка. */
+export interface CaseImage {
+  src: ImageMetadata;
+  alt: string;
+}
+
 export interface CaseStudy {
   slug: string;
+  /** Обложка 31:27, файл 1240×1080. Нет поля — заглушка. */
+  cover?: CaseImage;
   preview: CasePreview;
   title: string;
   kind: string;
@@ -59,10 +73,11 @@ export interface CaseStudy {
   intro: string;
   sections: CaseSection[];
   /**
-   * Галерея между разделами: число картинок или подписи к ним.
-   * Подпись видна на заглушке — подсказка, какой экран сюда ставить.
+   * Галерея между разделами, картинки 31:22 (файл 1240×880).
+   * Число — столько заглушек. В списке строка — заглушка с подписью,
+   * объект — настоящая картинка.
    */
-  gallery: number | string[];
+  gallery: number | (string | CaseImage)[];
   outcome: CaseSection;
   metrics: CaseMetric[];
 }
@@ -191,12 +206,17 @@ export const caseStudies: CaseStudy[] = [
         ],
       },
     ],
+    // Экраны выгружены из Figma в 2× и порезаны под места (см. PLAN.md)
+    cover: {
+      src: ecoCover,
+      alt: "Карта с датчиками и панель выбранного устройства: 13 показателей в пяти группах",
+    },
     gallery: [
-      "Карта и панель устройства",
-      "График показателя",
-      "Шкала качества воздуха",
-      "Выгрузка данных",
-      "Тёмная тема",
+      { src: ecoDevices, alt: "Карта, список устройств и панель выбранного датчика" },
+      { src: ecoChart, alt: "График показателя за полгода с выбором периода и выгрузкой отчёта" },
+      { src: ecoAqi, alt: "Настройки устройства: шкала качества воздуха из шести уровней" },
+      { src: ecoExport, alt: "Выгрузка данных: устройство, период и формат CSV или PDF" },
+      { src: ecoDark, alt: "Главный экран в тёмной теме" },
     ],
     outcome: {
       title: "Результат",
@@ -211,9 +231,9 @@ export const caseStudies: CaseStudy[] = [
       { value: "15 мин", label: "на настройку без выезда" },
     ],
     preview: {
-      src: saas,
-      alt: "Кейс: дашборд SaaS-продукта",
-      // Дашборд 435×309: помещается целиком, по центру
+      src: ecoPreview,
+      alt: "Кейс: платформа экомониторинга — карта с датчиками и панель устройства",
+      // Экран 1440×1024 почти совпадает по пропорциям с местом 435×309 — целиком, по центру
       class:
         "absolute left-1/2 top-1/2 h-[70.9%] w-[91.8%] -translate-x-1/2 -translate-y-1/2 object-cover",
       widths: [440, 880],
