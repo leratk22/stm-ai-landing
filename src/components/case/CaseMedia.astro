@@ -25,6 +25,12 @@ interface Props {
 }
 
 const { ratio, label, size, image, eager = false, class: className = "" } = Astro.props;
+
+// contain — готовый мокап: целиком, без обрезки и без скругления
+const imageClass =
+  image?.fit === "contain"
+    ? "absolute inset-[5%] h-[90%] w-[90%] object-contain"
+    : "absolute inset-[5%] h-[90%] w-[90%] rounded-[3px] object-cover";
 ---
 
 <div
@@ -43,7 +49,7 @@ const { ratio, label, size, image, eager = false, class: className = "" } = Astr
         alt={image.alt}
         widths={[560, 1120]}
         sizes="(min-width: 1024px) 45vw, 90vw"
-        class="absolute inset-[5%] h-[90%] w-[90%] rounded-[3px] object-cover"
+        class={imageClass}
         loading={eager ? "eager" : "lazy"}
       />
     ) : (
