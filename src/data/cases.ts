@@ -16,11 +16,11 @@ import coffee from "../assets/case-coffee-mood.png";
 import nova from "../assets/case-nova-landing.png";
 import ecoPreview from "../assets/cases/saas/preview.png";
 import ecoCover from "../assets/cases/saas/cover.png";
-import ecoDevices from "../assets/cases/saas/gallery-1-devices.png";
-import ecoChart from "../assets/cases/saas/gallery-2-chart.png";
-import ecoAqi from "../assets/cases/saas/gallery-3-aqi.png";
-import ecoExport from "../assets/cases/saas/gallery-4-export.png";
-import ecoDark from "../assets/cases/saas/gallery-5-dark.png";
+import ecoGeneral from "../assets/cases/saas/gallery-1-settings-general.png";
+import ecoAqi from "../assets/cases/saas/gallery-2-settings-aqi.png";
+import ecoStats from "../assets/cases/saas/gallery-3-statistics.png";
+import ecoStatsAlt from "../assets/cases/saas/gallery-4-statistics-alt.png";
+import ecoExport from "../assets/cases/saas/gallery-5-export.png";
 
 export interface CaseMeta {
   label: string;
@@ -65,6 +65,12 @@ export interface CaseImage {
    * свободное место остаётся стеклом.
    */
   fit?: "cover" | "contain";
+  /**
+   * Масштаб для contain. У готовых мокапов свои прозрачные поля, и
+   * вписанные в окно рамки они выглядят мелко — scale их подтягивает.
+   * Выходящие за окно прозрачные поля обрезает плашка, корпус остаётся внутри.
+   */
+  scale?: number;
 }
 
 export interface CaseStudy {
@@ -218,13 +224,17 @@ export const caseStudies: CaseStudy[] = [
       src: ecoCover,
       alt: "Главный экран в тёмной теме: карта с датчиками и панель буя с 13 показателями",
       fit: "contain",
+      // Корпус занимает 86% ширины файла: при 1.2 — 93% ширины рамки, по бокам ~23px стекла
+      scale: 1.2,
     },
+    // Готовые диалоги от заказчика с прозрачным фоном — как есть, в стеклянных рамках.
+    // 3 и 4 — одна вкладка статистики, отличаются только состоянием кнопок.
     gallery: [
-      { src: ecoDevices, alt: "Карта, список устройств и панель выбранного датчика" },
-      { src: ecoChart, alt: "График показателя за полгода с выбором периода и выгрузкой отчёта" },
-      { src: ecoAqi, alt: "Настройки устройства: шкала качества воздуха из шести уровней" },
-      { src: ecoExport, alt: "Выгрузка данных: устройство, период и формат CSV или PDF" },
-      { src: ecoDark, alt: "Главный экран в тёмной теме" },
+      { src: ecoGeneral, alt: "Настройки устройства, вкладка «Общие»: название, адрес и координаты GPS", fit: "contain" },
+      { src: ecoAqi, alt: "Настройки устройства, вкладка «Конфигурация»: шкала качества воздуха из шести уровней", fit: "contain" },
+      { src: ecoStats, alt: "Статистика: конструктор графика — устройство, датчик, агрегация, тип и цвет", fit: "contain" },
+      { src: ecoStatsAlt, alt: "Статистика: конструктор графика", fit: "contain" },
+      { src: ecoExport, alt: "Выгрузка данных: группа, устройство, период и формат CSV или PDF", fit: "contain" },
     ],
     outcome: {
       title: "Результат",

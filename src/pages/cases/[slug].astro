@@ -1,5 +1,4 @@
 ---
-import { Image } from "astro:assets";
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/sections/Header.astro";
 import CtaSection from "../../components/sections/CtaSection.astro";
@@ -38,9 +37,6 @@ const gallery = Array.isArray(study.gallery)
   ? study.gallery
   : Array.from({ length: study.gallery }, (_, i) => `Изображение ${i + 1}`);
 
-// Колонка ленты — половина контейнера на десктопе, вся ширина ниже
-const mediaSizes = "(min-width: 1024px) 50vw, 100vw";
-const mediaClass = "reveal h-auto w-full rounded-[4px] border border-white/12";
 ---
 
 <Layout
@@ -82,13 +78,7 @@ const mediaClass = "reveal h-auto w-full rounded-[4px] border border-white/12";
                 typeof item === "string" ? (
                   <CaseMedia class="reveal" ratio="31 / 22" label={item} size="1240×880" />
                 ) : (
-                  <Image
-                    src={item.src}
-                    alt={item.alt}
-                    widths={[620, 1240]}
-                    sizes={mediaSizes}
-                    class={mediaClass}
-                  />
+                  <CaseMedia class="reveal" ratio="31 / 22" label={item.alt} size="1240×880" image={item} />
                 ),
               )
             }

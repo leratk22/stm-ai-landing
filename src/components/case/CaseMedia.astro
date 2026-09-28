@@ -47,9 +47,10 @@ const imageClass =
       <Image
         src={image.src}
         alt={image.alt}
-        widths={[560, 1120]}
-        sizes="(min-width: 1024px) 45vw, 90vw"
+        widths={[640, 1280, 1600]}
+        sizes="(min-width: 1024px) 50vw, 100vw"
         class={imageClass}
+        style={image.scale ? `scale: ${image.scale}` : undefined}
         loading={eager ? "eager" : "lazy"}
       />
     ) : (
