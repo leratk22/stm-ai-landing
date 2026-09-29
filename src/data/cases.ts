@@ -15,7 +15,7 @@ import type { ImageMetadata } from "astro";
 import coffee from "../assets/case-coffee-mood.png";
 import nova from "../assets/case-nova-landing.png";
 import ecoCover from "../assets/cases/saas/cover.png";
-import ecoMockup from "../assets/cases/saas/mockup.png";
+import ecoPreview from "../assets/cases/saas/preview.png";
 import ecoGeneral from "../assets/cases/saas/gallery-1-settings-general.png";
 import ecoAqi from "../assets/cases/saas/gallery-2-settings-aqi.png";
 import ecoStats from "../assets/cases/saas/gallery-3-statistics.png";
@@ -250,19 +250,19 @@ export const caseStudies: CaseStudy[] = [
       { value: "15 мин", label: "на настройку без выезда" },
     ],
     preview: {
-      src: ecoMockup,
-      alt: "Кейс: платформа экомониторинга — главный экран в тёмной теме",
-      // Мокап с прозрачным фоном. Корпус — 86% ширины файла, остальное
-      // прозрачные поля. В карточке по центру: при 108% корпус 93% ширины
-      // плашки, как на обложке.
-      class: "absolute left-1/2 top-1/2 h-auto w-[108%] max-w-none -translate-x-1/2 -translate-y-1/2",
-      widths: [520, 1040],
-      sizes: "(min-width: 1024px) 520px, 110vw",
-      // В слайдере как остальные устройства: прижат к верху, низ за краем.
-      // Сдвиг вверх на 9.2% собственной высоты убирает прозрачное поле над корпусом.
+      src: ecoPreview,
+      alt: "Кейс: платформа экомониторинга — карта с датчиками и панель буя в окне браузера",
+      // Мокап 1920×1536: окно браузера — 75% ширины файла (x 240–1680,
+      // y 227–1308), вокруг полупрозрачная тень. В карточке по центру:
+      // при 120% окно — 90% ширины плашки. Край тени гасит fade-edges.
+      class: "fade-edges absolute left-1/2 top-1/2 h-auto w-[120%] max-w-none -translate-x-1/2 -translate-y-1/2",
+      widths: [580, 1160],
+      sizes: "(min-width: 1024px) 580px, 120vw",
+      // В слайдере как ноутбук: окно 88% ширины, верх на 12px, низ за краем.
+      // Сдвиг на 14.8% своей высоты — поле над окном в файле.
       hero: {
-        class: "absolute left-1/2 top-3 h-auto w-[104%] max-w-none -translate-x-1/2 -translate-y-[9.2%]",
-        width: 432,
+        class: "absolute left-1/2 top-3 h-auto w-[117.3%] max-w-none -translate-x-1/2 -translate-y-[14.8%]",
+        width: 488,
       },
     },
   }),
