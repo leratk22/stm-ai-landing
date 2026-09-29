@@ -252,17 +252,17 @@ export const caseStudies: CaseStudy[] = [
     preview: {
       src: ecoPreview,
       alt: "Кейс: платформа экомониторинга — карта с датчиками и панель буя в окне браузера",
-      // Мокап 1920×1536: окно браузера — 75% ширины файла (x 240–1680,
-      // y 227–1308), вокруг полупрозрачная тень. В карточке по центру:
-      // при 120% окно — 90% ширины плашки. Край тени гасит fade-edges.
-      class: "fade-edges absolute left-1/2 top-1/2 h-auto w-[120%] max-w-none -translate-x-1/2 -translate-y-1/2",
-      widths: [580, 1160],
-      sizes: "(min-width: 1024px) 580px, 120vw",
+      // Мокап 1920×1536, фон прозрачный: окно браузера — 86% ширины файла
+      // (x 132–1787, y 146–1389), вокруг мягкая тень. В карточке по центру:
+      // при 104.4% окно — 90% ширины плашки.
+      class: "absolute left-1/2 top-1/2 h-auto w-[104.4%] max-w-none -translate-x-1/2 -translate-y-1/2",
+      widths: [500, 1000],
+      sizes: "(min-width: 1024px) 500px, 105vw",
       // В слайдере как ноутбук: окно 88% ширины, верх на 12px, низ за краем.
-      // Сдвиг на 14.8% своей высоты — поле над окном в файле.
+      // Сдвиг на 9.5% своей высоты — поле над окном в файле.
       hero: {
-        class: "absolute left-1/2 top-3 h-auto w-[117.3%] max-w-none -translate-x-1/2 -translate-y-[14.8%]",
-        width: 488,
+        class: "absolute left-1/2 top-3 h-auto w-[102.1%] max-w-none -translate-x-1/2 -translate-y-[9.5%]",
+        width: 424,
       },
     },
   }),

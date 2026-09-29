@@ -215,15 +215,4 @@ html:not(.js) [data-slider-controls] {
     from { transform: translateX(0); }
     to   { transform: translateX(-50%); }
   }
-
-  /* Края картинки растворяются в плашке. У мокапов shots.so фон —
-     полупрозрачная тень до 50%, и если кадр меньше плашки, его граница
-     видна внутри стекла. Маска гасит только внешние 11–13%: окно
-     браузера в таких мокапах начинается дальше от края и остаётся целым. */
-  .fade-edges {
-    mask-image:
-      linear-gradient(to right, transparent, #000 11%, #000 89%, transparent),
-      linear-gradient(to bottom, transparent, #000 13%, #000 87%, transparent);
-    mask-composite: intersect;
-  }
 }
