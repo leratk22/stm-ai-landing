@@ -15,6 +15,7 @@ import type { ImageMetadata } from "astro";
 import coffee from "../assets/case-coffee-mood.png";
 import nova from "../assets/case-nova-landing.png";
 import ecoCover from "../assets/cases/saas/cover.png";
+import ecoMockup from "../assets/cases/saas/mockup.png";
 import ecoGeneral from "../assets/cases/saas/gallery-1-settings-general.png";
 import ecoAqi from "../assets/cases/saas/gallery-2-settings-aqi.png";
 import ecoStats from "../assets/cases/saas/gallery-3-statistics.png";
@@ -69,6 +70,11 @@ export interface CaseImage {
    * Выходящие за окно прозрачные поля обрезает плашка, корпус остаётся внутри.
    */
   scale?: number;
+  /**
+   * Пропорция плашки обложки, если картинка не 31:27. Непрозрачный кадр
+   * встаёт в окно своей пропорции целиком: поля 5% — стекло, обрезки нет.
+   */
+  ratio?: string;
 }
 
 export interface CaseStudy {
@@ -220,10 +226,9 @@ export const caseStudies: CaseStudy[] = [
     // Готовый мокап от заказчика — вставлен как есть, целиком
     cover: {
       src: ecoCover,
-      alt: "Главный экран в тёмной теме: карта с датчиками и панель буя с 13 показателями",
-      fit: "contain",
-      // Корпус занимает 86% ширины файла: при 1.2 — 93% ширины рамки, по бокам ~23px стекла
-      scale: 1.2,
+      alt: "Панель буя крупным планом: 13 показателей воды, воздуха и ветра поверх карты с датчиками",
+      // Кадр 1920×1080 во всю площадь — плашка под него 16:9
+      ratio: "16 / 9",
     },
     // Готовые диалоги от заказчика с прозрачным фоном — как есть, в стеклянных рамках
     gallery: [
@@ -245,9 +250,9 @@ export const caseStudies: CaseStudy[] = [
       { value: "15 мин", label: "на настройку без выезда" },
     ],
     preview: {
-      src: ecoCover,
+      src: ecoMockup,
       alt: "Кейс: платформа экомониторинга — главный экран в тёмной теме",
-      // Тот же мокап, что на обложке. Корпус — 86% ширины файла, остальное
+      // Мокап с прозрачным фоном. Корпус — 86% ширины файла, остальное
       // прозрачные поля. В карточке по центру: при 108% корпус 93% ширины
       // плашки, как на обложке.
       class: "absolute left-1/2 top-1/2 h-auto w-[108%] max-w-none -translate-x-1/2 -translate-y-1/2",

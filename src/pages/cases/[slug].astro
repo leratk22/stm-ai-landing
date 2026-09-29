@@ -57,7 +57,7 @@ const gallery = Array.isArray(study.gallery)
           {/* Обложка всегда в стеклянной плашке: экран вписан внутрь с полями */}
           <CaseMedia
             class="reveal"
-            ratio="31 / 27"
+            ratio={study.cover?.ratio ?? "31 / 27"}
             label="Обложка"
             size="1240×1080"
             image={study.cover}
