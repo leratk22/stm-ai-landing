@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import type { CaseImage } from "../../data/cases";
+import { withBase } from "../../lib/url";
 
 /**
  * Стеклянная плашка под картинку кейса. Заливка white/10, а не /5:
@@ -44,7 +45,20 @@ const imageClass =
   aria-label={image ? undefined : `Заглушка: ${label}`}
 >
   {
-    image ? (
+    image?.video ? (
+      <video
+        class="absolute inset-[5%] h-[90%] w-[90%] rounded-[3px] object-cover"
+        src={withBase(image.video)}
+        poster={image.src.src}
+        aria-label={image.alt}
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        data-promo-video
+      />
+    ) : image ? (
       <Image
         src={image.src}
         alt={image.alt}
@@ -62,3 +76,13 @@ const imageClass =
     )
   }
 </div>
+
+<script>
+  // «Меньше движения» в системе: ролик не играет сам, остаётся постер
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.querySelectorAll<HTMLVideoElement>("[data-promo-video]").forEach((v) => {
+      v.removeAttribute("autoplay");
+      v.pause();
+    });
+  }
+</script>

@@ -14,6 +14,7 @@
 import type { ImageMetadata } from "astro";
 import coffee from "../assets/case-coffee-mood.png";
 import nova from "../assets/case-nova-landing.png";
+import coveVideoPoster from "../assets/cases/mobile-app/cover-poster.png";
 import ecoCover from "../assets/cases/saas/cover.png";
 import ecoPreview from "../assets/cases/saas/preview.png";
 import ecoGeneral from "../assets/cases/saas/gallery-1-settings-general.png";
@@ -70,6 +71,12 @@ export interface CaseImage {
    * Выходящие за окно прозрачные поля обрезает плашка, корпус остаётся внутри.
    */
   scale?: number;
+  /**
+   * Путь к ролику в public/ (без base). Тогда в плашке играет видео,
+   * а `src` служит постером — кадром, пока ролик грузится, и для режима
+   * «меньше движения».
+   */
+  video?: string;
   /**
    * Пропорция плашки обложки, если картинка не 31:27. Непрозрачный кадр
    * встаёт в окно своей пропорции целиком: поля 5% — стекло, обрезки нет.
@@ -205,6 +212,13 @@ export const caseStudies: CaseStudy[] = [
       { value: "−35%", label: "обращений в поддержку" },
       { value: "4,7", label: "рейтинг в App Store, был 3,9" },
     ],
+    // Промо-ролик 1240×1080 (11.8 с, без звука) из экранов Cove — вместо картинки обложки.
+    // Собран из экспорта Paper (светлый вариант U1–U4), см. PLAN.md.
+    cover: {
+      src: coveVideoPoster,
+      alt: "Промо-ролик приложения Cove: выбор страны, подключение, настройки",
+      video: "videos/cove-promo.mp4",
+    },
     preview: {
       src: coffee,
       alt: "Кейс: VPN-приложение для iOS (временная картинка)",
