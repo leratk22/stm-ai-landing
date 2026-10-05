@@ -16,8 +16,8 @@ import coffee from "../assets/case-coffee-mood.png";
 import nova from "../assets/case-nova-landing.png";
 import coveVideoPoster from "../assets/cases/mobile-app/cover-poster.png";
 import coveOverview from "../assets/cases/mobile-app/gallery-1-overview.webp";
-import coveTabbar from "../assets/cases/mobile-app/gallery-2-tabbar.webp";
-import coveHeader from "../assets/cases/mobile-app/gallery-3-header.webp";
+import coveHeader from "../assets/cases/mobile-app/gallery-2-header.webp";
+import coveTabbar from "../assets/cases/mobile-app/gallery-3-tabbar.webp";
 import ecoCover from "../assets/cases/saas/cover.png";
 import ecoPreview from "../assets/cases/saas/preview.png";
 import ecoGeneral from "../assets/cases/saas/gallery-1-settings-general.png";
@@ -227,29 +227,22 @@ export const caseStudies: CaseStudy[] = [
       alt: "Промо-ролик приложения Cove: выбор страны, подключение, настройки",
       video: "videos/cove-promo.mp4",
     },
-    // Готовые мокапы с прозрачным фоном — как есть, в стеклянных рамках
+    // Готовые мокапы 2000×1419 — пропорция плашки 31:22, прозрачный фон: на всю плашку, как есть
     gallery: [
       {
         src: coveOverview,
         alt: "Два экрана приложения Cove: не подключено с выбором страны и подключено с новым адресом",
-        // Во всю плашку, без полей: крупнее целого кадра, но телефоны не упираются в края
         fit: "bleed",
-        focus: "50% 50%",
-        scale: 1.3,
-      },
-      {
-        src: coveTabbar,
-        alt: "Нижняя часть экрана крупно: текущий и настоящий адрес, кнопка «Activate», стеклянное меню",
-        fit: "bleed",
-        focus: "50% 45%",
-        scale: 1.15,
       },
       {
         src: coveHeader,
         alt: "Верх экрана крупно: статус «Not connected», выбор страны и карта",
         fit: "bleed",
-        focus: "50% 40%",
-        scale: 1.45,
+      },
+      {
+        src: coveTabbar,
+        alt: "Нижняя часть экрана крупно: текущий и настоящий адрес, кнопка «Activate», стеклянное меню",
+        fit: "bleed",
       },
     ],
     preview: {
