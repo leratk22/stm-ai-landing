@@ -12,7 +12,7 @@
  */
 
 import type { ImageMetadata } from "astro";
-import coffee from "../assets/case-coffee-mood.png";
+import covePreview from "../assets/cases/mobile-app/preview.webp";
 import nova from "../assets/case-nova-landing.png";
 import coveVideoPoster from "../assets/cases/mobile-app/cover-poster.png";
 import coveOverview from "../assets/cases/mobile-app/gallery-1-overview.webp";
@@ -246,14 +246,15 @@ export const caseStudies: CaseStudy[] = [
       },
     ],
     preview: {
-      src: coffee,
-      alt: "Кейс: VPN-приложение для iOS (временная картинка)",
-      // Телефон 293×600: прижат к верху на 20px, обрезан снизу
-      class: "absolute left-1/2 top-5 h-[137.7%] w-[61.9%] -translate-x-1/2 object-cover object-top",
-      widths: [300, 600],
-      sizes: "(min-width: 1024px) 300px, 62vw",
-      // Как в макете: 231px из 414, сверху 3px
-      hero: { class: "absolute left-1/2 top-[3px] h-auto w-[56%] -translate-x-1/2", width: 232 },
+      src: covePreview,
+      alt: "Кейс: VPN-приложение Cove — экран подключения",
+      // Мокап 1920×1280, прозрачный фон: телефон 29.9% ширины файла, по центру, верх на 3.6%.
+      // Как у кофейни: телефон 62% ширины плашки, сверху на ~20px, низ обрезан плашкой
+      class: "absolute left-1/2 -top-0.5 h-auto w-[207%] max-w-none -translate-x-1/2",
+      widths: [900, 1800],
+      sizes: "(min-width: 1024px) 900px, 207vw",
+      // В слайдере телефон 56% ширины, сверху 3px: файл 187% слайда, сдвиг вверх на поле над телефоном
+      hero: { class: "absolute left-1/2 top-[-16px] h-auto w-[187%] max-w-none -translate-x-1/2", width: 775 },
     },
   }),
   fromTemplate({
