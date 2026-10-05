@@ -253,8 +253,8 @@ export const caseStudies: CaseStudy[] = [
       class: "absolute left-1/2 top-[18px] h-auto w-[207%] max-w-none -translate-x-1/2",
       widths: [900, 1800],
       sizes: "(min-width: 1024px) 900px, 207vw",
-      // В слайдере телефон 56% ширины, сверху 3px: файл 187% слайда, сдвиг вверх на поле над телефоном
-      hero: { class: "absolute left-1/2 top-[-16px] h-auto w-[187%] max-w-none -translate-x-1/2", width: 775 },
+      // В слайдере телефон 56% ширины, сверху ~24px (было 3 — опустили, упирался в верх плашки); файл 187% слайда
+      hero: { class: "absolute left-1/2 top-[5px] h-auto w-[187%] max-w-none -translate-x-1/2", width: 775 },
     },
   }),
   fromTemplate({
