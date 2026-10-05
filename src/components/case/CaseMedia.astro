@@ -29,10 +29,19 @@ interface Props {
 const { ratio, label, size, image, eager = false, class: className = "" } = Astro.props;
 
 // contain — готовый мокап: целиком, без обрезки и без скругления
+// bleed — мокап во всю плашку, без полей: крупно, с обрезкой по краям рамки
 const imageClass =
-  image?.fit === "contain"
-    ? "absolute inset-[5%] h-[90%] w-[90%] object-contain"
-    : "absolute inset-[5%] h-[90%] w-[90%] rounded-[3px] object-cover";
+  image?.fit === "bleed"
+    ? "absolute inset-0 h-full w-full object-cover"
+    : image?.fit === "contain"
+      ? "absolute inset-[5%] h-[90%] w-[90%] object-contain"
+      : "absolute inset-[5%] h-[90%] w-[90%] rounded-[3px] object-cover";
+const imageStyle = [
+  image?.scale ? `scale: ${image.scale}` : "",
+  image?.focus ? `object-position: ${image.focus}; transform-origin: ${image.focus}` : "",
+]
+  .filter(Boolean)
+  .join("; ");
 ---
 
 <div
@@ -65,7 +74,7 @@ const imageClass =
         widths={[640, 1280, 1600]}
         sizes="(min-width: 1024px) 50vw, 100vw"
         class={imageClass}
-        style={image.scale ? `scale: ${image.scale}` : undefined}
+        style={imageStyle || undefined}
         loading={eager ? "eager" : "lazy"}
       />
     ) : (
