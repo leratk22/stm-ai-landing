@@ -15,6 +15,9 @@ import type { ImageMetadata } from "astro";
 import coffee from "../assets/case-coffee-mood.png";
 import nova from "../assets/case-nova-landing.png";
 import coveVideoPoster from "../assets/cases/mobile-app/cover-poster.png";
+import coveOverview from "../assets/cases/mobile-app/gallery-1-overview.webp";
+import coveTabbar from "../assets/cases/mobile-app/gallery-2-tabbar.webp";
+import coveHeader from "../assets/cases/mobile-app/gallery-3-header.webp";
 import ecoCover from "../assets/cases/saas/cover.png";
 import ecoPreview from "../assets/cases/saas/preview.png";
 import ecoGeneral from "../assets/cases/saas/gallery-1-settings-general.png";
@@ -219,6 +222,26 @@ export const caseStudies: CaseStudy[] = [
       alt: "Промо-ролик приложения Cove: выбор страны, подключение, настройки",
       video: "videos/cove-promo.mp4",
     },
+    // Готовые мокапы с прозрачным фоном — как есть, в стеклянных рамках
+    gallery: [
+      {
+        src: coveOverview,
+        alt: "Два экрана приложения Cove: не подключено с выбором страны и подключено с новым адресом",
+        fit: "contain",
+        // У мокапа большие прозрачные поля: телефоны занимают 57% ширины файла, ×1.3 — 74%
+        scale: 1.3,
+      },
+      {
+        src: coveTabbar,
+        alt: "Нижняя часть экрана крупно: текущий и настоящий адрес, кнопка «Activate», стеклянное меню",
+        fit: "contain",
+      },
+      {
+        src: coveHeader,
+        alt: "Верх экрана крупно: статус «Not connected», выбор страны и карта",
+        fit: "contain",
+      },
+    ],
     preview: {
       src: coffee,
       alt: "Кейс: VPN-приложение для iOS (временная картинка)",
