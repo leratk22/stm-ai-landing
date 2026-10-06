@@ -41,6 +41,7 @@ const total = caseStudies.length;
           alt={study.preview.alt}
           widths={[study.preview.hero.width, study.preview.hero.width * 2]}
           sizes={`${study.preview.hero.width}px`}
+          quality={92}
           class={study.preview.hero.class}
           loading={i === 0 ? "eager" : "lazy"}
           draggable="false"
