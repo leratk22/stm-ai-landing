@@ -19,7 +19,7 @@ import coveOverview from "../assets/cases/mobile-app/gallery-1-overview.webp";
 import coveHeader from "../assets/cases/mobile-app/gallery-2-header.webp";
 import coveTabbar from "../assets/cases/mobile-app/gallery-3-tabbar.webp";
 import ecoCover from "../assets/cases/saas/cover.png";
-import ecoPreview from "../assets/cases/saas/preview.png";
+import ecoPreview from "../assets/cases/saas/preview.webp";
 import ecoGeneral from "../assets/cases/saas/gallery-1-settings-general.png";
 import ecoAqi from "../assets/cases/saas/gallery-2-settings-aqi.png";
 import ecoStats from "../assets/cases/saas/gallery-3-statistics.png";
@@ -335,18 +335,17 @@ export const caseStudies: CaseStudy[] = [
     ],
     preview: {
       src: ecoPreview,
-      alt: "Кейс: платформа экомониторинга — карта с датчиками и панель буя в окне браузера",
-      // Мокап 1920×1536, фон прозрачный: окно браузера — 86% ширины файла
-      // (x 132–1787, y 146–1389), вокруг мягкая тень. В карточке по центру:
-      // при 104.4% окно — 90% ширины плашки.
-      class: "absolute left-1/2 top-1/2 h-auto w-[104.4%] max-w-none -translate-x-1/2 -translate-y-1/2",
-      widths: [500, 1000],
-      sizes: "(min-width: 1024px) 500px, 105vw",
-      // В слайдере как ноутбук: окно 88% ширины, верх на 12px, низ за краем.
-      // Сдвиг на 9.5% своей высоты — поле над окном в файле.
+      alt: "Кейс: платформа экомониторинга — капля воды с датчиком внутри и фиолетовая дуга",
+      // Арт 1586×992, прозрачный фон: капля + дуга занимают 63.4% ширины файла (x 447–1452)
+      // и 86% высоты (y 4.8–90.7%), центр рисунка — 59.9% по x и 47.8% по y.
+      // Центруем именно рисунок, а не файл. В карточке рисунок 90% ширины плашки (файл 142%).
+      class: "absolute left-1/2 top-1/2 h-auto w-[142%] max-w-none -translate-x-[59.9%] -translate-y-[47.8%]",
+      widths: [620, 1240],
+      sizes: "(min-width: 1024px) 620px, 146vw",
+      // В слайдере рисунок целиком, с воздухом сверху и снизу: высота 89%, файл 88% ширины слайда.
       hero: {
-        class: "absolute left-1/2 top-3 h-auto w-[102.1%] max-w-none -translate-x-1/2 -translate-y-[9.5%]",
-        width: 424,
+        class: "absolute left-1/2 top-1/2 h-auto w-[88%] max-w-none -translate-x-[59.9%] -translate-y-[47.8%]",
+        width: 366,
       },
     },
   }),
